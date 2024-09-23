@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>追踪标签</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="renderer" content="webkit">
+	<meta name="theme-color" content="#222325">
+	<meta name="apple-mobile-web-app-status-bar-style" content="#222325">
+	<meta name="msapplication-navbutton-color" content="#222325">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Tomotoes/font/font.min.css">
+	<link rel="preload" href="//at.alicdn.com/t/font_2809294_1h4ysr4lk7ii.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/font_2809294_5kwjib9n71b.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+	<meta http-equiv="x-dns-prefetch-control" content="on">
+	<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+	<link rel="prefetch" href="https://cdn.jsdelivr.net/">
+	<meta name="description" content="Author:Ycitus,Category:Personal Web">
+	<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+	<base target="_blank">
+</head>
+
+</html>
+
+<body>
+	<main>
+		<div class="content content-intro">
+			<div class="content-inner"><canvas id="background"></canvas>
+				<div class="wrap fade">
+					<h2 class="content-title">厦门邦良贸易有限公司</h2>
+					<h3 class="content-subtitle" original-content="">&nbsp;
+					</h3><a class="enter">enter</a>
+					<div class="arrow arrow-1"></div>
+					<div class="arrow arrow-2"></div>
+				</div>
+			</div>
+			<div class="shape-wrap"><svg class="shape" width="100%" height="100vh" preserveAspectRatio="none"
+					viewBox="0 0 1440 800" xmlns:pathdata="http://www.codrops.com/">
+					<path
+						d="M-44-50C-52.71 28.52 15.86 8.186 184 14.69 383.3 22.39 462.5 12.58 638 14 835.5 15.6 987 6.4 1194 13.86 1661 30.68 1652-36.74 1582-140.1 1512-243.5 15.88-589.5-44-50Z"
+						pathdata:id="M -44,-50 C -137.1,117.4 67.86,445.5 236,452 435.3,459.7 500.5,242.6 676,244 873.5,245.6 957,522.4 1154,594 1593,753.7 1793,226.3 1582,-126 1371,-478.3 219.8,-524.2 -44,-50 Z">
+					</path>
+				</svg>
+			</div>
+		</div>
+		<div class="content content-main">
+			<div id="page">
+				<div id="card">
+					<!-- <li class="offline_message" id="offline-message"><h3>当前已离线</h3></li>
+					<li class="ip_list" id="ip-list"><h3>当前在线：</h3></li>
+					<li class="ip_show" id="ip-1"><a href="{{ url_for('index') }}"><i>首页</i><span>前往首页</span></a></li>
+					<li class="ip_show" id="ip-2"><a href="{{ url_for('index') }}"><i>首页</i><span>前往首页</span></a></li>
+					<li class="ip_show" id="ip-3"><a href="{{ url_for('index') }}"><i>首页</i><span>前往首页</span></a></li>
+					<li class="ip_show" id="ip-4"><a href="{{ url_for('index') }}"><i>首页</i><span>前往首页</span></a></li>
+					<li class="ip_show" id="ip-5"><a href="{{ url_for('index') }}"><i>首页</i><span>前往首页</span></a></li>
+					<li class="ip_show" id="ip-6"><a href="{{ url_for('index') }}"><i>首页</i><span>前往首页</span></a></li> -->
+					<div class="card-inner fade">
+						<header><li class="openFile" id="bu00"><a onclick="" aria-label="FINTIS"><i>FINTIS</i><span data-translate="FINTIS">FINTIS</span></a></li>
+							<h1 data-translate="name">
+								<input type="text" id="printNum" placeholder="请输入要打印的数量">
+							</h1>
+							<a style="text-decoration: none;" target="_blank">
+								<h1 data-translate="name">
+									<div id="zhuizongmessage"></div>
+								</h1>
+								<h2 id="signature" data-translate="signature" original-content="请输入要打印的数量"></h2>
+							</a>
+
+							<li class="pageButton" id="page-button1"><a href="{{ url_for('index') }}"><i>首页</i><span>前往首页</span></a></li>
+							<li class="pageButton" id="page-button2"><a href="/dayin"><i>面单条码打印</i><span>前往面单条码打印</span></a></li>
+						</header>
+						<ul>
+							<!-- <li id="whole-first"><a onclick="blog()"
+									aria-label="blog"><i class="iconfont icon-bokeyuan1"></i><span
+										data-translate="Blog">Blog</span></a></li>
+							<li id="whole-second"><a onclick="bilibili()"
+									aria-label="bilibili"><i class="iconfont icon-bilibili1"></i><span
+										data-translate="bilibili">bilibili</span></a></li>
+							<li id="half-first"><a href="mailto:2799282971@qq.com" aria-label="我的邮箱"><i
+										class="iconfont icon-email1"></i><span data-translate="我的邮箱">我的邮箱</span></a></li>
+							<li class="quarter" id="quarter-first"><a aria-label="QQ"><i
+										class="iconfont icon-qq"></i><img src="assets/qq.jpg" height="95" width="95"
+										alt="QQ"></a></li>
+							<li class="quarter" id="quarter-second"><a onclick="file()"
+									rel="noopener" aria-label="文件"><i class="iconfont icon-files2"></i><span
+										data-translate="文件">文件</span></a></li>
+							<li class="quarter" id="quarter-third"><a onclick="game()" 
+									rel="noopener" aria-label="游戏"><i class="iconfont icon-game"></i><span
+										data-translate="游戏">游戏</span></a></li>
+							<li class="quarter" id="quarter-fourth"><a onclick="other()" aria-label="other"><i
+										class="iconfont icon-fm-i-other"></i></a></li> -->
+                            <li class="quarter" id="bu11"><a onclick="print_1PC()" aria-label="1PC"><i>1PC</i><span data-translate="1PC">1件套</span></a></li>
+                            <li class="quarter" id="bu12"><a onclick="print_2PCS()" aria-label="2PCS"><i>2PCS</i><span data-translate="2PCS">2件套</span></a></li>
+                            <li class="quarter" id="bu13"><a onclick="print_3PCS()" aria-label="3PCS"><i>3PCS</i><span data-translate="3PCS">3件套</span></a></li>
+                            <li class="quarter" id="bu14"><a onclick="print_4PCS()" aria-label="4PCS"><i>4PCS</i><span data-translate="4PCS">4件套</span></a></li>
+                            <li class="quarter" id="bu15"><a onclick="print_5PCS()" aria-label="5PCS"><i>5PCS</i><span data-translate="5PCS">5件套</span></a></li>
+                            <li class="quarter" id="bu16"><a onclick="print_6PCS()" aria-label="6PCS"><i>6PCS</i><span data-translate="6PCS">6件套</span></a></li>
+                            <li class="quarter" id="bu17"><a onclick="print_7PCS()" aria-label="7PCS"><i>7PCS</i><span data-translate="7PCS">7件套</span></a></li>
+                            <li class="quarter" id="bu21"><a onclick="print_8PCS()" aria-label="8PCS"><i>8PCS</i><span data-translate="8PCS">8件套</span></a></li>
+                            <li class="quarter" id="bu22"><a onclick="print_9PCS()" aria-label="9PCS"><i>9PCS</i><span data-translate="9PCS">9件套</span></a></li>
+                            <li class="quarter" id="bu23"><a onclick="print_10PCS()" aria-label="10PCS"><i>10PCS</i><span data-translate="10PCS">10件套</span></a></li>
+                            <li class="quarter" id="bu24"><a onclick="print_11PCS()" aria-label="11PCS"><i>11PCS</i><span data-translate="11PCS">11件套</span></a></li>
+                            <li class="quarter" id="bu25"><a onclick="print_KDJ01()" aria-label="KDJ01"><i>KDJ01</i><span data-translate="KDJ01">眼镜土豆</span></a></li>
+                            <li class="quarter" id="bu26"><a onclick="print_KDJ02()" aria-label="KDJ02"><i>KDJ02</i><span data-translate="KDJ02">粑粑</span></a></li>
+                            <li class="quarter" id="bu27"><a onclick="print_KDJ03()" aria-label="KDJ03"><i>KDJ03</i><span data-translate="KDJ03">胡萝卜</span></a></li>
+                            <li class="quarter" id="bu31"><a onclick="print_KDSF10()" aria-label="KDSF10"><i>SF10</i><span data-translate="KDSF10">向日葵</span></a></li>
+                            <li class="quarter" id="bu32"><a onclick="print_KDPOO5()" aria-label="KDPOO5"><i>POO5</i><span data-translate="KDPOO5">粑粑</span></a></li>
+                            <li class="quarter" id="bu33"><a onclick="print_KDCUKE5()" aria-label="KDCUKE5"><i>CUKE5</i><span data-translate="KDCUKE5">黄瓜</span></a></li>
+                            <li class="quarter" id="bu34"><a onclick="print_KDPOTATO()" aria-label="KDPOTATO5"><i>POTATO5</i><span data-translate="KDPOTATO5">土豆</span></a></li>
+                            <li class="quarter" id="bu35"><a onclick="print_KDCORN2()" aria-label="KDCORN2"><i>CORN2</i><span data-translate="KDCORN2">玉米卷</span></a></li>
+                            <!-- <li class="quarter" id="bu36"><a onclick="" aria-label=""></i><span data-translate=""></span></a></li>
+                            <li class="quarter" id="bu37"><a onclick="" aria-label=""></i><span data-translate=""></span></a></li>          -->
+						</ul>
+						<hr>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+		<script>
+			window.$ = selector => document.querySelector(selector)
+			const getOriginalContent = selector => $(selector).getAttribute("original-content")
+			window.subtitle = getOriginalContent(".content-subtitle")
+			window.signature = getOriginalContent("#signature")
+			window.config = {
+				SIM_RESOLUTION: 128,
+				DYE_RESOLUTION: 1024,
+				CAPTURE_RESOLUTION: 512,
+				DENSITY_DISSIPATION: 1,
+				VELOCITY_DISSIPATION: 0.2,
+				PRESSURE: 0.8,
+				PRESSURE_ITERATIONS: 20,
+				CURL: 30,
+				SPLAT_RADIUS: 0.25,
+				SPLAT_FORCE: 6000,
+				SHADING: true,
+				COLORFUL: true,
+				COLOR_UPDATE_SPEED: 10,
+				PAUSED: false,
+				BACK_COLOR: { r: 30, g: 31, b: 33 },
+				TRANSPARENT: false,
+				BLOOM: true,
+				BLOOM_ITERATIONS: 8,
+				BLOOM_RESOLUTION: 256,
+				BLOOM_INTENSITY: 0.4,
+				BLOOM_THRESHOLD: 0.8,
+				BLOOM_SOFT_KNEE: 0.7,
+				SUNRAYS: true,
+				SUNRAYS_RESOLUTION: 196,
+				SUNRAYS_WEIGHT: 1.0,
+			}
+		</script>
+		<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/background.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/link.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/print.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/util.js') }}"></script>
+		<script>
+			window.onload = function() {
+				loadAll();
+				setTimeout(updateClientCount, 3000);
+				setInterval(updateClientCount, 10000); // 每 10秒更新一次在线客户端数量
+			}
+		</script>
+		<script>
+			function add_new_EventListener() {
+				const inputElement = document.getElementById('printNum');
+				inputElement.addEventListener('blur', function () {
+				const inputValue = this.value;
+				fetch('/get_print_num', {
+					method: 'POST',
+					headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+					},
+					body: `inputValue=${inputValue}`
+				})
+				.then(response => response.text())
+				.then(data => {
+					console.log(data);
+					})
+				.catch(error => {
+					console.error('Error:', error);
+					});
+				});
+				inputElement.addEventListener('input', function () {
+					const inputValue = parseInt(this.value);
+					if (isNaN(inputValue) || inputValue <= 0 || inputValue >= 300) {
+						this.value = '';
+						alert('请输入大于 0 小于 300 的数字。');
+						return false;
+					}
+					return true;
+				});
+			}
+			add_new_EventListener();
+		</script>
+	</main>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+<!--<script>-->
+<!--	function updateClientCount() {-->
+<!--		fetch('/get_ip_list')-->
+<!--		   .then(response => response.text())-->
+<!--		   .then(data => {-->
+<!--				// document.getElementById('signature').innerText = data-->
+<!--				if (data.split('|')[0] != 'ycitus'){-->
+<!--					const elementOfflineMessage = document.getElementById('offline-message');-->
+<!--					if (!elementOfflineMessage)  document.getElementById('card').innerHTML += '<li class="offline_message" id="offline-message"><h3>当前已离线</h3></li>';-->
+<!--					const elementToRemove1 = document.getElementById('ip-list');-->
+<!--					const elementToRemove2 = document.getElementById('ip-1');-->
+<!--					const elementToRemove3 = document.getElementById('ip-2');-->
+<!--					const elementToRemove4 = document.getElementById('ip-3');-->
+<!--					const elementToRemove5 = document.getElementById('ip-4');-->
+<!--					const elementToRemove6 = document.getElementById('ip-5');-->
+<!--					const elementToRemove7 = document.getElementById('ip-6');-->
+<!--					if (elementToRemove1) {elementToRemove1.parentNode.removeChild(elementToRemove1);}-->
+<!--					if (elementToRemove2) {elementToRemove2.parentNode.removeChild(elementToRemove2);}-->
+<!--					if (elementToRemove3) {elementToRemove3.parentNode.removeChild(elementToRemove3);}-->
+<!--					if (elementToRemove4) {elementToRemove4.parentNode.removeChild(elementToRemove4);}-->
+<!--					if (elementToRemove5) {elementToRemove5.parentNode.removeChild(elementToRemove5);}-->
+<!--					if (elementToRemove6) {elementToRemove6.parentNode.removeChild(elementToRemove6);}-->
+<!--					if (elementToRemove7) {elementToRemove7.parentNode.removeChild(elementToRemove7);}-->
+<!--				} else {-->
+<!--					const elementToRemove = document.getElementById('offline-message');-->
+<!--					if (elementToRemove) {elementToRemove.parentNode.removeChild(elementToRemove);}-->
+<!--					const elementIpList = document.getElementById('ip-list');-->
+<!--					if (!elementIpList)  document.getElementById('card').innerHTML += '<li class="ip_list" id="ip-list"><h3>当前在线：</h3></li>';-->
+<!--					const ipList = data.split('|')[1].split(',');-->
+<!--					const elementToRemove2 = document.getElementById('ip-1');-->
+<!--					const elementToRemove3 = document.getElementById('ip-2');-->
+<!--					const elementToRemove4 = document.getElementById('ip-3');-->
+<!--					const elementToRemove5 = document.getElementById('ip-4');-->
+<!--					const elementToRemove6 = document.getElementById('ip-5');-->
+<!--					const elementToRemove7 = document.getElementById('ip-6');-->
+<!--					if (elementToRemove2) {elementToRemove2.parentNode.removeChild(elementToRemove2);}-->
+<!--					if (elementToRemove3) {elementToRemove3.parentNode.removeChild(elementToRemove3);}-->
+<!--					if (elementToRemove4) {elementToRemove4.parentNode.removeChild(elementToRemove4);}-->
+<!--					if (elementToRemove5) {elementToRemove5.parentNode.removeChild(elementToRemove5);}-->
+<!--					if (elementToRemove6) {elementToRemove6.parentNode.removeChild(elementToRemove6);}-->
+<!--					if (elementToRemove7) {elementToRemove7.parentNode.removeChild(elementToRemove7);}-->
+<!--					i = 0;-->
+<!--					for (const ip of ipList) {-->
+<!--						// document.getElementById('signature').innerText = ip;-->
+<!--						i++;-->
+<!--						const newLi = document.getElementById('ip-'+i);-->
+<!--						if(!newLi) {-->
+<!--							document.getElementById('card').innerHTML += '<li class="ip_show" id="ip-' + i + '"><a onclick="close_ip' + i +-->
+<!--								'()"><i>' + ip + '</i><span>关闭连接</span></a></li>';-->
+<!--						}-->
+<!--					}-->
+<!--				}-->
+<!--			})-->
+<!--		   .catch(error => console.error('Error fetching client count:', error));-->
+<!--	}-->
+
+<!--</script>-->
+</body>

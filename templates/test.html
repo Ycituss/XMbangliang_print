@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <h1>在线客户端数量</h1>
+    <p id="client-count">正在获取...</p>
+    <button onclick="ban()"></button>
+    <p id="ban_ip"></p>
+
+    <script>
+        function updateClientCount() {
+            fetch('/get_ip_list')
+               .then(response => response.text())
+               .then(data => {
+                    if (data.split('|')[0] != 'ycitus'){
+                        document.getElementById('client-count').textContent = '当前已离线'
+                        document.getElementById('ban_ip').textContent = ''
+                    } else {
+                        document.getElementById('client-count').textContent = data.split('|')[1];
+                        document.getElementById('ban_ip').textContent = data.split('|')[2];
+                    }
+                })
+               .catch(error => console.error('Error fetching client count:', error));
+        }
+
+        setInterval(updateClientCount, 5000); // 每 5 秒更新一次在线客户端数量
+    </script>
+    <script>
+        function ban() {
+            fetch('/ban_ip')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('ban_ip').textContent = data.split('|')[2];
+                console.log(data)
+                })
+        }
+    </script>
+</body>
+
+</html>

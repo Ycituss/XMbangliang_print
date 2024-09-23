@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>邦良Print</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="renderer" content="webkit">
+	<meta name="theme-color" content="#222325">
+	<meta name="apple-mobile-web-app-status-bar-style" content="#222325">
+	<meta name="msapplication-navbutton-color" content="#222325">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Tomotoes/font/font.min.css">
+	<link rel="preload" href="//at.alicdn.com/t/font_2809294_1h4ysr4lk7ii.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/font_2809294_5kwjib9n71b.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+	<meta http-equiv="x-dns-prefetch-control" content="on">
+	<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+	<link rel="prefetch" href="https://cdn.jsdelivr.net/">
+	<meta name="description" content="Author:Ycitus,Category:Personal Web">
+	<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+	<base target="_blank">
+</head>
+
+</html>
+
+<body>
+	<main>
+		<div class="content content-intro">
+			<div class="content-inner"><canvas id="background"></canvas>
+				<div class="wrap fade">
+					<h2 class="content-title">
+						<a class="content-title" target="_self" href="/dayin">普通打印</a>
+						<a class="content-title" target="_self" href="/zhuizong">追踪标签</a>
+					</h2>
+					<h3 class="content-subtitle" original-content="厦 门 邦 良 贸 易 有 限 公 司">&nbsp;</h3>
+					<!-- </h3><a class="enter">enter</a>
+					<div class="arrow arrow-1"></div>
+					<div class="arrow arrow-2"></div> -->
+				</div>
+			</div>
+			<div class="shape-wrap"><svg class="shape" width="100%" height="100vh" preserveAspectRatio="none"
+					viewBox="0 0 1440 800" xmlns:pathdata="http://www.codrops.com/">
+					<path
+						d="M-44-50C-52.71 28.52 15.86 8.186 184 14.69 383.3 22.39 462.5 12.58 638 14 835.5 15.6 987 6.4 1194 13.86 1661 30.68 1652-36.74 1582-140.1 1512-243.5 15.88-589.5-44-50Z"
+						pathdata:id="M -44,-50 C -137.1,117.4 67.86,445.5 236,452 435.3,459.7 500.5,242.6 676,244 873.5,245.6 957,522.4 1154,594 1593,753.7 1793,226.3 1582,-126 1371,-478.3 219.8,-524.2 -44,-50 Z">
+					</path>
+				</svg></div>
+		</div>
+		<div class="content content-main">
+			<div id="page">
+				<div id="card">
+					<div class="card-inner fade">
+						<header>
+							<!-- <h1 data-translate="name">Ycitus</h1> -->
+							<a href=# style="text-decoration: none;" target="_blank">
+								<h2 id="signature" data-translate="signature" original-content=""></h2>
+							</a>
+						</header>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+		<script>window.$ = selector => document.querySelector(selector)
+			const getOriginalContent = selector => $(selector).getAttribute("original-content")
+			window.subtitle = getOriginalContent(".content-subtitle")
+			window.signature = getOriginalContent("#signature")
+			window.config = {
+				SIM_RESOLUTION: 128,
+				DYE_RESOLUTION: 1024,
+				CAPTURE_RESOLUTION: 512,
+				DENSITY_DISSIPATION: 1,
+				VELOCITY_DISSIPATION: 0.2,
+				PRESSURE: 0.8,
+				PRESSURE_ITERATIONS: 20,
+				CURL: 30,
+				SPLAT_RADIUS: 0.25,
+				SPLAT_FORCE: 6000,
+				SHADING: true,
+				COLORFUL: true,
+				COLOR_UPDATE_SPEED: 10,
+				PAUSED: false,
+				BACK_COLOR: { r: 30, g: 31, b: 33 },
+				TRANSPARENT: false,
+				BLOOM: true,
+				BLOOM_ITERATIONS: 8,
+				BLOOM_RESOLUTION: 256,
+				BLOOM_INTENSITY: 0.4,
+				BLOOM_THRESHOLD: 0.8,
+				BLOOM_SOFT_KNEE: 0.7,
+				SUNRAYS: true,
+				SUNRAYS_RESOLUTION: 196,
+				SUNRAYS_WEIGHT: 1.0,
+			}
+		</script>
+		<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/background.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/link.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/print.js') }}"></script>
+	</main>
+</body>
