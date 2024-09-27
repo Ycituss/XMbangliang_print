@@ -319,6 +319,20 @@ function print_YZ_huanbaobiao() {
     updateClientCount();
 }
 
+function print_LY_huanbaobiao() {
+    document.getElementById('fileTypeMT').innerText = '正在合成，请勿重复点击';
+    fetch('/print_LY_huanbaobiao')
+       .then(response => response.text())
+       .then(data => {
+            document.getElementById('fileTypeMT').innerText = data.split('|')[0];
+            if (data.split('|').length > 1) {
+                setTimeout(printComplete, parseInt(data.split('|')[1]) * 100);
+            }
+            console.log(data);
+        });
+    updateClientCount();
+}
+
 function print_PP_huanbaobiao() {
     document.getElementById('fileTypeMT').innerText = '正在合成，请勿重复点击'
     fetch('/print_PP_huanbaobiao')

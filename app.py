@@ -24,6 +24,7 @@ MH_huanbaobiao = ".\\file\\盟豪全环保标模版.pdf"
 PP_huanbaobiao = ".\\file\\磐品全环保标模版.pdf"
 YZ_huanbaobiao = ".\\file\\云准全环保标模版.pdf"
 YLCX_huanbaobiao = ".\\file\\伊鹭畅兴全环保标模版.pdf"
+LY_huanbaobiao = ".\\file\\朗赢全环保标模版.pdf"
 SHEIN_huanbaobiao = ".\\file\\希音环保标模版.pdf"
 trace_Separator = ".\\file\\分隔.pdf"
 trace_1PC = ".\\file\\1PC.pdf"
@@ -104,6 +105,12 @@ def upload():
         user_name = '阿华'
     elif last_ip_digit == '125':
         user_name = '峰哥'
+    elif last_ip_digit == '123':
+        user_name = '阿莫'
+    elif last_ip_digit == '180':
+        user_name = '小蒋'
+    elif last_ip_digit == '181':
+        user_name = '小黎'
     new_filename = f'{user_name}_{file.filename}'
     formatted_date = datetime.datetime.now().strftime('%y%m%d')
     folder_path = '.\\print\\'+formatted_date+'\\'+user_name+'\\'
@@ -335,6 +342,7 @@ def print_BL_huanbaobiao():
         shutil.copy(temp_print_file_path, temp_print_file_path[:-4] + '_已打印.pdf')
         temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
         print_470E(temp_print_file_path)
+        temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
         return '打印中，请稍后|'+ str(5+0.1*temp_print_pdf.getNumPages())
     if not os.path.exists(temp_print_file_path[:-4] + '_已打印.pdf'):
         with open(temp_print_file_path[:-4] + '_已打印.pdf', 'w') as f:
@@ -428,6 +436,28 @@ def print_YZ_huanbaobiao():
         with open(temp_print_file_path[:-4] + '_已打印.pdf', 'w') as f:
             pass
     merge_pdfs_vertically(YZ_huanbaobiao, temp_print_file_path, temp_print_file_path[:-4] + '_已打印.pdf')
+
+    temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
+    temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
+    print_470E(temp_print_file_path)
+    return '打印中，请稍后|'+ str(50+2*temp_print_pdf.getNumPages())
+
+@app.route('/print_LY_huanbaobiao')
+def print_LY_huanbaobiao():
+    global temp_print_file_path, LY_huanbaobiao
+    if not os.path.exists(temp_print_file_path):
+        return '请选择文件'
+    if temp_print_file_path[-7:-4] == '已打印':
+        return '请勿重复点击'
+    if get_file_type(temp_print_file_path) == '条码_带环保标':
+        return '正在合成，请勿重复点击'
+    if get_file_type(temp_print_file_path)!= '条码':
+        return '当前文件不是条码'
+
+    if not os.path.exists(temp_print_file_path[:-4] + '_已打印.pdf'):
+        with open(temp_print_file_path[:-4] + '_已打印.pdf', 'w') as f:
+            pass
+    merge_pdfs_vertically(LY_huanbaobiao, temp_print_file_path, temp_print_file_path[:-4] + '_已打印.pdf')
 
     temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
     temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
@@ -750,6 +780,12 @@ def get_ip_list():
             name_list.append('阿华')
         elif ip == '192.168.31.125':
             name_list.append('峰哥')
+        elif ip == '192.168.31.123':
+            name_list.append('阿莫')
+        elif ip == '192.168.31.180':
+            name_list.append('小蒋')
+        elif ip == '192.168.31.181':
+            name_list.append('小黎')
         else:
             name_list.append(ip.split('.')[-1])
     ban_ips = list(blocked_ips.keys())
@@ -765,6 +801,12 @@ def get_ip_list():
             ban_name_list.append('阿华')
         elif ip == '192.168.31.125':
             ban_name_list.append('峰哥')
+        elif ip == '192.168.31.123':
+            ban_name_list.append('阿莫')
+        elif ip == '192.168.31.180':
+            ban_name_list.append('小蒋')
+        elif ip == '192.168.31.181':
+            ban_name_list.append('小黎')
         else:
             ban_name_list.append(ip.split('.')[-1])
     return f'ycitus|{", ".join(name_list)}|{", ".join(ban_name_list)}'

@@ -548,6 +548,27 @@ main {
     width: 95px
 }
 
+#card li.half {
+    height: 95px;
+    width: 210px;
+    line-height: 95px;
+    font-size: 2rem
+}
+
+#card li.quarterX3 {
+    height: 95px;
+    width: 305px;
+    line-height: 95px;
+    font-size: 2rem
+}
+
+#card li.quarterX4 {
+    height: 95px;
+    width: 410px;
+    line-height: 95px;
+    font-size: 2rem
+}
+
 #card li.ip_list {
     height: 60px;
     width: 260px;
