@@ -173,6 +173,8 @@ def upload11():
     temp_print_file_path = folder_path+new_filename
     if get_file_type(temp_print_file_path) != '条码_带环保标' and get_file_type(temp_print_file_path) != 'TK条码':
         return '选择的文件有误'
+    if PyPDF2.PdfFileReader(temp_print_file_path).getNumPages() > 1:
+        return '选择的文件有误'
     output_file(temp_print_file_path)
     return new_filename + ',' + get_file_type(folder_path+new_filename)
 
