@@ -374,3 +374,77 @@ function print_BL_huanbaobiao() {
     });
     updateClientCount();
 }
+
+function craft_miandan() {
+    document.getElementById('fileTypeMT').innerText = '合成完成'
+    const link = document.createElement('a');
+    link.href = '/craft_miandan';
+    // 模拟点击链接以触发下载
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function craft_MH_huanbaobiao() {
+    document.getElementById('fileTypeMT').innerText = '合成完成'
+    const link = document.createElement('a');
+    link.href = '/craft_MH_huanbaobiao';
+    // 模拟点击链接以触发下载
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function craft_BL_huanbaobiao() {
+    document.getElementById('fileTypeMT').innerText = '合成完成';
+    const link = document.createElement('a');
+    link.href = '/craft_BL_huanbaobiao';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function craft_PP_huanbaobiao() {
+    document.getElementById('fileTypeMT').innerText = '合成完成';
+    const link = document.createElement('a');
+    link.href = '/craft_PP_huanbaobiao';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function craft_YZ_huanbaobiao() {
+    document.getElementById('fileTypeMT').innerText = '合成完成';
+    const link = document.createElement('a');
+    link.href = '/craft_YZ_huanbaobiao';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function craft_YLCX_huanbaobiao() {
+    document.getElementById('fileTypeMT').innerText = '合成完成';
+    const link = document.createElement('a');
+    link.href = '/craft_YLCX_huanbaobiao';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function craft_LY_huanbaobiao() {
+    document.getElementById('fileTypeMT').innerText = '合成完成';
+    const link = document.createElement('a');
+    link.href = '/craft_LY_huanbaobiao';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function craft_SHEIN_huanbaobiao() {
+    document.getElementById('fileTypeMT').innerText = '合成完成';
+    const link = document.createElement('a');
+    link.href = '/craft_SHEIN_huanbaobiao';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}

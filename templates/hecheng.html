@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>条码面单打印</title>
+	<title>条码面单合成</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -51,10 +51,6 @@
 				<div id="card">
 					<div class="card-inner fade">
 						<header>
-<!--							<li class="checkbox" id="checkbox">-->
-<!--								<input type="checkbox" id="myCheckbox">-->
-<!--								<label for="myCheckbox">仅合成</label>-->
-<!--							</li>-->
 							<li class="openFile" id="bu00">
 								<a aria-label="FINTIS">
 									<i>文件</i>
@@ -68,21 +64,21 @@
 								<div id="fileTypeMT"></div>
 							</h1>
 							<a style="text-decoration: none;" target="_blank">
-								<h2 id="signature" data-translate="signature" original-content="请选择要打印的文件"></h2>
+								<h2 id="signature" data-translate="signature" original-content="请选择要合成的文件"></h2>
 							</a>
 
-							<li class="pageButton" id="page-button1"><a href="/hecheng"><i>面单条码合成</i><span>前往面单条码合成</span></a></li>
+							<li class="pageButton" id="page-button1"><a href="/dayin"><i>面单条码打印</i><span>前往面单条码打印</span></a></li>
 							<li class="pageButton" id="page-button2"><a href="/zhuizong"><i>追踪标签</i><span>前往追踪标签打印</span></a></li>
 						</header>
 						<ul>
-							<li id="whole-first"><a onclick="print_miandan()"aria-label="打印面单"><i>面单</i><span data-translate="打印面单">打印面单</span></a></li>
-							<li id="whole-second"><a onclick="print_BL_huanbaobiao()"aria-label="邦良"><i>邦良</i><span data-translate="邦良">邦良&TK</span></a></li>
-							<li id="half-first"><a onclick="print_YLCX_huanbaobiao()"aria-label="伊鹭畅兴"><i>伊鹭畅兴</i><span data-translate="伊鹭畅兴">伊鹭畅兴</span></a></li>
-							<li class="quarter" id="quarter-first"><a onclick="print_MH_huanbaobiao()" aria-label="盟豪"><i>盟豪</i><span data-translate="盟豪">盟豪</span></a></li>
-							<li class="quarter" id="quarter-second"><a onclick="print_PP_huanbaobiao()" aria-label="磐品"><i>磐品</i><span data-translate="磐品">磐品</span></a></li>
-							<li class="quarter" id="quarter-third"><a onclick="print_YZ_huanbaobiao()" aria-label="云准"><i>云准</i><span data-translate="云准">云准</span></a></li>
-							<li class="quarter" id="quarter-fourth"><a onclick="print_SHEIN_huanbaobiao()" aria-label="希音"><i>希音</i><span data-translate="希音">希音</span></a></li>
-                            <li class="quarterX3" id="bu35"><a onclick="print_LY_huanbaobiao()" aria-label="朗赢"><i>朗赢</i><span data-translate="朗赢">朗赢</span></a></li>
+							<li id="whole-first"><a onclick="craft_miandan()"aria-label="打印面单"><i>面单</i><span data-translate="打印面单">打印面单</span></a></li>
+							<li id="whole-second"><a onclick="craft_BL_huanbaobiao()"aria-label="邦良"><i>邦良</i><span data-translate="邦良">邦良&TK</span></a></li>
+							<li id="half-first"><a onclick="craft_YLCX_huanbaobiao()"aria-label="伊鹭畅兴"><i>伊鹭畅兴</i><span data-translate="伊鹭畅兴">伊鹭畅兴</span></a></li>
+							<li class="quarter" id="quarter-first"><a onclick="craft_MH_huanbaobiao()" aria-label="盟豪"><i>盟豪</i><span data-translate="盟豪">盟豪</span></a></li>
+							<li class="quarter" id="quarter-second"><a onclick="craft_PP_huanbaobiao()" aria-label="磐品"><i>磐品</i><span data-translate="磐品">磐品</span></a></li>
+							<li class="quarter" id="quarter-third"><a onclick="craft_YZ_huanbaobiao()" aria-label="云准"><i>云准</i><span data-translate="云准">云准</span></a></li>
+							<li class="quarter" id="quarter-fourth"><a onclick="craft_SHEIN_huanbaobiao()" aria-label="希音"><i>希音</i><span data-translate="希音">希音</span></a></li>
+                            <li class="quarterX3" id="bu35"><a onclick="craft_LY_huanbaobiao()" aria-label="朗赢"><i>朗赢</i><span data-translate="朗赢">朗赢</span></a></li>
                             <li class="quarterX4" id="bu31"><a onclick="" aria-label="temp"><i></i><span data-translate="temp"></span></a></li>
                             <!-- <li class="quarter" id="bu11"><a onclick="" aria-label="1PC"><i>test</i><span data-translate="1PC">test</span></a></li> -->
 						</ul>

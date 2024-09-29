@@ -548,6 +548,13 @@ main {
     width: 95px
 }
 
+#card li.checkbox {
+    width: 100px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 1.2rem
+}
+
 #card li.half {
     height: 95px;
     width: 210px;
@@ -762,6 +769,11 @@ li#quarter-first span {
     #quarter-fourth {
         left: 630px;
         top: 105px
+    }
+
+    #checkbox {
+        left: 0px;
+        top: -40px;
     }
 
     #offline-message {
