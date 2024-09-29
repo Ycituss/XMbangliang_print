@@ -128,6 +128,54 @@ def upload():
     temp_print_file_path = folder_path+new_filename
     return new_filename + ',' + get_file_type(folder_path+new_filename)
 
+@app.route('/upload11', methods=['POST'])
+def upload11():
+    global temp_print_file_path
+    if 'file' not in request.files:
+        return ' ,没有文件部分'
+    file = request.files['file']
+    if file.filename == '':
+        return ' ,没有选择文件'
+    if file.filename.split('.')[-1] != 'pdf':
+        return ' ,选择的文件不是PDF'
+    ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+    if ',' in ip:
+        ip = ip.split(',')[0]
+    ip = ip.split('.')[-1]
+    last_ip_digit = ip.split('.')[-1]
+    user_name = 'temp'
+    if last_ip_digit == '122' or last_ip_digit == '1':
+        user_name = '阿随'
+    elif last_ip_digit == '168':
+        user_name = '阿杰'
+    elif last_ip_digit == '169':
+        user_name = '大杨哥'
+    elif last_ip_digit == '170':
+        user_name = '阿华'
+    elif last_ip_digit == '125':
+        user_name = '峰哥'
+    elif last_ip_digit == '123':
+        user_name = '阿莫'
+    elif last_ip_digit == '180':
+        user_name = '小蒋'
+    elif last_ip_digit == '181':
+        user_name = '小黎'
+    new_filename = f'{user_name}_{file.filename}'
+    formatted_date = datetime.datetime.now().strftime('%y%m%d')
+    folder_path = '.\\print\\'+formatted_date+'\\'+user_name+'\\'
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+    while os.path.exists(os.path.join(folder_path, new_filename)):
+        new_filename = new_filename[:-4]+'1.pdf'
+    file.save(os.path.join(folder_path, new_filename))
+    if get_file_type(folder_path+new_filename) == '文件大小有误':
+        return ' ,选择的文件不是条码或面单'
+    temp_print_file_path = folder_path+new_filename
+    if get_file_type(temp_print_file_path) != '条码_带环保标' and get_file_type(temp_print_file_path) != 'TK条码':
+        return '选择的文件有误'
+    output_file(temp_print_file_path)
+    return new_filename + ',' + get_file_type(folder_path+new_filename)
+
 
 @app.route('/print_1PC')
 def print_1PC():

@@ -111,6 +111,15 @@
                             <li class="quarter" id="bu33"><a onclick="print_KDCUKE5()" aria-label="KDCUKE5"><i>CUKE5</i><span data-translate="KDCUKE5">黄瓜</span></a></li>
                             <li class="quarter" id="bu34"><a onclick="print_KDPOTATO()" aria-label="KDPOTATO5"><i>POTATO5</i><span data-translate="KDPOTATO5">土豆</span></a></li>
                             <li class="quarter" id="bu35"><a onclick="print_KDCORN2()" aria-label="KDCORN2"><i>CORN2</i><span data-translate="KDCORN2">玉米卷</span></a></li>
+							<li class="quarter" id="bu37">
+								<a aria-label="FINTIS">
+									<i>文件</i>
+									<span data-translate="FINTIS">
+										打开文件
+										<input type="file" id="fileInput" style="position:absolute;opacity:0;width:100%;height:100%;top:0;left:0;cursor:pointer;">
+									</span>
+								</a>
+							</li>
                             <!-- <li class="quarter" id="bu36"><a onclick="" aria-label=""></i><span data-translate=""></span></a></li>
                             <li class="quarter" id="bu37"><a onclick="" aria-label=""></i><span data-translate=""></span></a></li>          -->
 						</ul>
@@ -195,6 +204,28 @@
 					}
 					return true;
 				});
+				const fileInput = document.getElementById('fileInput');
+				fileInput.addEventListener('input', async function () {
+					if (fileInput.files.length > 0) {
+						const response = await uploadFile();
+						document.getElementById('signature').innerText = response.split(',')[0];
+						// document.getElementById('fileTypeMT').innerText = response.split(',')[1];
+					}
+				});
+
+				async function uploadFile() {
+					const file = fileInput.files[0];
+					if (!file) {
+						return '请选择文件';
+					}
+					const formData = new FormData();
+					formData.append('file', file);
+					const response = await fetch('/upload11', {
+						method: 'POST',
+						body: formData
+					});
+					return await response.text();
+				}
 			}
 			add_new_EventListener();
 		</script>
