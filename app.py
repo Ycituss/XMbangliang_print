@@ -169,14 +169,15 @@ def upload11():
         new_filename = new_filename[:-4]+'1.pdf'
     file.save(os.path.join(folder_path, new_filename))
     if get_file_type(folder_path+new_filename) == '文件大小有误':
-        return ' ,选择的文件不是条码或面单'
+        return ' 选择的文件不是条码或面单'
     temp_print_file_path = folder_path+new_filename
-    if get_file_type(temp_print_file_path) != '条码_带环保标' and get_file_type(temp_print_file_path) != 'TK条码':
+    if get_file_type(temp_print_file_path) != '条码_带环保标' and get_file_type(temp_print_file_path) != 'TK条码' \
+            and get_file_type(temp_print_file_path) != '470E':
         return '选择的文件有误'
     if PyPDF2.PdfFileReader(temp_print_file_path).getNumPages() > 1:
         return '选择的文件有误'
     output_file(temp_print_file_path)
-    return new_filename + ',' + get_file_type(folder_path+new_filename)
+    return new_filename + '\n' + get_file_type(folder_path+new_filename)
 
 
 @app.route('/print_1PC')
@@ -833,6 +834,9 @@ def get_file_type(file_path):
     elif 141 < page.artbox.height < 142 and 197 < page.artbox.width < 199:
         pdf_file.close
         return 'TK条码'
+    elif 1.55 < page.artbox.width/page.artbox.height < 1.7:
+        pdf_file.close
+        return '470E'
     else:
         pdf_file.close
         return '文件大小有误'
