@@ -781,11 +781,15 @@ def add_zhuangxiang(miandan_pdf_path, num):
     temp_pdf_reader = PyPDF2.PdfReader(temp_pdf)
     miandan_pdf = open(miandan_pdf_path, 'rb')
     miandan_pdf_reader = PyPDF2.PdfReader(miandan_pdf)
+    temp_baoguo = f".\\file\\包裹\\{miandan_pdf_reader.getNumPages()}个包裹.pdf"
+    baoguo_pdf = open(temp_baoguo, 'rb')
+    baoguo_pdf_reader = PyPDF2.PdfFileReader(baoguo_pdf)
     page_size = temp_pdf_reader.pages[0].mediabox.upper_right
     if num == 1:
         new_page = writer.add_blank_page(width=page_size[0], height=page_size[0])
         new_page.mergeTranslatedPage(miandan_pdf_reader.pages[0], 0, 0)
         new_page.mergeTranslatedPage(temp_pdf_reader.pages[0], 0, 0)
+        new_page.mergeTranslatedPage(baoguo_pdf_reader.pages[0], 0, 0)
         with open(miandan_pdf_path[:-4]+'_外箱单.pdf', 'wb') as out:
             writer.write(out)
         return miandan_pdf_path[:-4]+'_外箱单.pdf'
