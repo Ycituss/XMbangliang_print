@@ -1,3 +1,17 @@
+function print_babyteether() {
+    fetch('/print_babyteether')
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById('printNum').placeholder = '已打印，请重新输入数量'
+        document.getElementById('printNum').value = ''
+        document.getElementById('signature').innerText = ''
+        document.getElementById('zhuizongmessage').innerText = '打印中，请稍后'
+        setTimeout(changeZhuizongmessage, parseInt(data)*100)
+        console.log(data)
+    })
+    updateClientCount();
+}
+
 function print_1PC() {
     fetch('/print_1PC')
     .then(response => response.text())

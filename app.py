@@ -27,6 +27,7 @@ YLCX_huanbaobiao = ".\\file\\伊鹭畅兴全环保标模版.pdf"
 LY_huanbaobiao = ".\\file\\朗赢全环保标模版.pdf"
 SHEIN_huanbaobiao = ".\\file\\希音环保标模版.pdf"
 trace_Separator = ".\\file\\分隔.pdf"
+trace_babyteether = ".\\file\\babyteether.pdf"
 trace_1PC = ".\\file\\1PC.pdf"
 trace_2PCS = ".\\file\\2PCS.pdf"
 trace_3PCS = ".\\file\\3PCS.pdf"
@@ -179,6 +180,11 @@ def upload11():
     output_file(temp_print_file_path)
     return new_filename + '\n' + get_file_type(folder_path+new_filename)
 
+@app.route('/print_babyteether')
+def print_babyteether():
+    global trace_babyteether
+    temp_num = output_file(trace_babyteether)
+    return str(60 + 2 * int(temp_num))
 
 @app.route('/print_1PC')
 def print_1PC():
