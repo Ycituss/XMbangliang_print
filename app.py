@@ -1,5 +1,8 @@
 import os
 import datetime
+import requests
+import base64
+from bs4 import BeautifulSoup
 import PyPDF2
 import win32api
 import shutil
@@ -86,6 +89,7 @@ def call_print_test():
 
 @app.route('/upload', methods=['POST'])
 def upload():
+    verify()
     global temp_print_file_path
     if 'file' not in request.files:
         return ' ,没有文件部分'
@@ -131,6 +135,7 @@ def upload():
 
 @app.route('/upload11', methods=['POST'])
 def upload11():
+    verify()
     global temp_print_file_path
     if 'file' not in request.files:
         return ' ,没有文件部分'
@@ -182,12 +187,14 @@ def upload11():
 
 @app.route('/print_babyteether')
 def print_babyteether():
+    verify()
     global trace_babyteether
     temp_num = output_file(trace_babyteether)
     return str(60 + 2 * int(temp_num))
 
 @app.route('/print_1PC')
 def print_1PC():
+    verify()
     global trace_1PC
     temp_num = output_file(trace_1PC)
     return str(60 + 2 * int(temp_num))
@@ -195,6 +202,7 @@ def print_1PC():
 
 @app.route('/print_2PCS')
 def print_2PCS():
+    verify()
     global trace_2PCS
     temp_num = output_file(trace_2PCS)
     return str(60 + 2 * int(temp_num))
@@ -202,6 +210,7 @@ def print_2PCS():
 
 @app.route('/print_3PCS')
 def print_3PCS():
+    verify()
     global trace_3PCS
     temp_num = output_file(trace_3PCS)
     return str(60 + 2 * int(temp_num))
@@ -209,6 +218,7 @@ def print_3PCS():
 
 @app.route('/print_4PCS')
 def print_4PCS():
+    verify()
     global trace_4PCS
     temp_num = output_file(trace_4PCS)
     return str(60 + 2 * int(temp_num))
@@ -216,6 +226,7 @@ def print_4PCS():
 
 @app.route('/print_5PCS')
 def print_5PCS():
+    verify()
     global trace_5PCS
     temp_num = output_file(trace_5PCS)
     return str(60 + 2 * int(temp_num))
@@ -223,6 +234,7 @@ def print_5PCS():
 
 @app.route('/print_6PCS')
 def print_6PCS():
+    verify()
     global trace_6PCS
     temp_num = output_file(trace_6PCS)
     return str(60 + 2 * int(temp_num))
@@ -230,6 +242,7 @@ def print_6PCS():
 
 @app.route('/print_7PCS')
 def print_7PCS():
+    verify()
     global trace_7PCS
     temp_num = output_file(trace_7PCS)
     return str(60 + 2 * int(temp_num))
@@ -237,6 +250,7 @@ def print_7PCS():
 
 @app.route('/print_8PCS')
 def print_8PCS():
+    verify()
     global trace_8PCS
     temp_num = output_file(trace_8PCS)
     return str(60 + 2 * int(temp_num))
@@ -244,6 +258,7 @@ def print_8PCS():
 
 @app.route('/print_9PCS')
 def print_9PCS():
+    verify()
     global trace_9PCS
     temp_num = output_file(trace_9PCS)
     return str(60 + 2 * int(temp_num))
@@ -251,6 +266,7 @@ def print_9PCS():
 
 @app.route('/print_10PCS')
 def print_10PCS():
+    verify()
     global trace_10PCS
     temp_num = output_file(trace_10PCS)
     return str(60 + 2 * int(temp_num))
@@ -258,6 +274,7 @@ def print_10PCS():
 
 @app.route('/print_11PCS')
 def print_11PCS():
+    verify()
     global trace_11PCS
     temp_num = output_file(trace_11PCS)
     return str(60 + 2 * int(temp_num))
@@ -265,6 +282,7 @@ def print_11PCS():
 
 @app.route('/print_KDJ01')
 def print_KDJ01():
+    verify()
     global trace_KDJ01
     temp_num = output_file(trace_KDJ01)
     return str(60 + 2 * int(temp_num))
@@ -272,6 +290,7 @@ def print_KDJ01():
 
 @app.route('/print_KDJ02')
 def print_KDJ02():
+    verify()
     global trace_KDJ02
     temp_num = output_file(trace_KDJ02)
     return str(60 + 2 * int(temp_num))
@@ -279,6 +298,7 @@ def print_KDJ02():
 
 @app.route('/print_KDJ03')
 def print_KDJ03():
+    verify()
     global trace_KDJ03
     temp_num = output_file(trace_KDJ03)
     return str(60 + 2 * int(temp_num))
@@ -286,6 +306,7 @@ def print_KDJ03():
 
 @app.route('/print_KDSF10')
 def print_KDSF10():
+    verify()
     global trace_KDSF10
     temp_num = output_file(trace_KDSF10)
     return str(60 + 2 * int(temp_num))
@@ -293,6 +314,7 @@ def print_KDSF10():
 
 @app.route('/print_KDPOO5')
 def print_KDPOO5():
+    verify()
     global trace_KDPOO5
     temp_num = output_file(trace_KDPOO5)
     return str(60 + 2 * int(temp_num))
@@ -300,6 +322,7 @@ def print_KDPOO5():
 
 @app.route('/print_KDCUKE5')
 def print_KDCUKE5():
+    verify()
     global trace_KDCUKE5
     temp_num = output_file(trace_KDCUKE5)
     return str(60 + 2 * int(temp_num))
@@ -307,6 +330,7 @@ def print_KDCUKE5():
 
 @app.route('/print_KDPOTATO5')
 def print_KDPOTATO5():
+    verify()
     global trace_KDPOTATO5
     temp_num = output_file(trace_KDPOTATO5)
     return str(60 + 2 * int(temp_num))
@@ -314,6 +338,7 @@ def print_KDPOTATO5():
 
 @app.route('/print_KDCORN2')
 def print_KDCORN2():
+    verify()
     global trace_KDCORN2
     temp_num = output_file(trace_KDCORN2)
     return str(60 + 2 * int(temp_num))
@@ -321,6 +346,7 @@ def print_KDCORN2():
 
 @app.route('/get_print_num', methods=['POST'])
 def get_print_num():
+    verify()
     global print_num
     print_num = request.form.get('inputValue')
     print(print_num)
@@ -329,6 +355,7 @@ def get_print_num():
 
 @app.route('/print_miandan')
 def print_miandan():
+    verify()
     global temp_print_file_path, miandan_Separator
     if not os.path.exists(temp_print_file_path):
         return '请选择文件'
@@ -368,6 +395,7 @@ def print_miandan():
 
 @app.route('/print_SHEIN_huanbaobiao')
 def print_SHEIN_huanbaobiao():
+    verify()
     global temp_print_file_path, SHEIN_huanbaobiao
     if not os.path.exists(temp_print_file_path):
         return '请选择文件'
@@ -390,6 +418,7 @@ def print_SHEIN_huanbaobiao():
 
 @app.route('/print_BL_huanbaobiao')
 def print_BL_huanbaobiao():
+    verify()
     global temp_print_file_path, BL_huanbaobiao
     if not os.path.exists(temp_print_file_path):
         return '请选择文件'
@@ -417,6 +446,7 @@ def print_BL_huanbaobiao():
 
 @app.route('/print_MH_huanbaobiao')
 def print_MH_huanbaobiao():
+    verify()
     global temp_print_file_path, MH_huanbaobiao
     if not os.path.exists(temp_print_file_path):
         return '请选择文件'
@@ -439,6 +469,7 @@ def print_MH_huanbaobiao():
 
 @app.route('/print_PP_huanbaobiao')
 def print_PP_huanbaobiao():
+    verify()
     global temp_print_file_path, PP_huanbaobiao
     if not os.path.exists(temp_print_file_path):
         return '请选择文件'
@@ -461,6 +492,7 @@ def print_PP_huanbaobiao():
 
 @app.route('/print_YLCX_huanbaobiao')
 def print_YLCX_huanbaobiao():
+    verify()
     global temp_print_file_path, YLCX_huanbaobiao
     if not os.path.exists(temp_print_file_path):
         return '请选择文件'
@@ -483,6 +515,7 @@ def print_YLCX_huanbaobiao():
 
 @app.route('/print_YZ_huanbaobiao')
 def print_YZ_huanbaobiao():
+    verify()
     global temp_print_file_path, YZ_huanbaobiao
     if not os.path.exists(temp_print_file_path):
         return '请选择文件'
@@ -505,6 +538,7 @@ def print_YZ_huanbaobiao():
 
 @app.route('/print_LY_huanbaobiao')
 def print_LY_huanbaobiao():
+    verify()
     global temp_print_file_path, LY_huanbaobiao
     if not os.path.exists(temp_print_file_path):
         return '请选择文件'
@@ -527,6 +561,7 @@ def print_LY_huanbaobiao():
 
 @app.route('/craft_miandan')
 def craft_miandan():
+    verify()
     global temp_print_file_path, miandan_Separator
     if not os.path.exists(temp_print_file_path):
         return '请选择文件'
@@ -565,6 +600,7 @@ def craft_miandan():
 
 @app.route('/craft_BL_huanbaobiao')
 def craft_BL_huanbaobiao():
+    verify()
     global temp_print_file_path, BL_huanbaobiao
     if not os.path.exists(temp_print_file_path):
         return '请选择文件'
@@ -588,6 +624,7 @@ def craft_BL_huanbaobiao():
 
 @app.route('/craft_MH_huanbaobiao')
 def craft_MH_huanbaobiao():
+    verify()
     global temp_print_file_path, MH_huanbaobiao
     if not os.path.exists(temp_print_file_path):
         return '请选择文件'
@@ -608,6 +645,7 @@ def craft_MH_huanbaobiao():
 
 @app.route('/craft_PP_huanbaobiao')
 def craft_PP_huanbaobiao():
+    verify()
     global temp_print_file_path, PP_huanbaobiao
     if not os.path.exists(temp_print_file_path):
         return '请选择文件'
@@ -628,6 +666,7 @@ def craft_PP_huanbaobiao():
 
 @app.route('/craft_YZ_huanbaobiao')
 def craft_YZ_huanbaobiao():
+    verify()
     global temp_print_file_path, YZ_huanbaobiao
     if not os.path.exists(temp_print_file_path):
         return '请选择文件'
@@ -648,6 +687,7 @@ def craft_YZ_huanbaobiao():
 
 @app.route('/craft_YLCX_huanbaobiao')
 def craft_YLCX_huanbaobiao():
+    verify()
     global temp_print_file_path, YLCX_huanbaobiao
     if not os.path.exists(temp_print_file_path):
         return '请选择文件'
@@ -668,6 +708,7 @@ def craft_YLCX_huanbaobiao():
 
 @app.route('/craft_LY_huanbaobiao')
 def craft_LY_huanbaobiao():
+    verify()
     global temp_print_file_path, LY_huanbaobiao
     if not os.path.exists(temp_print_file_path):
         return '请选择文件'
@@ -688,6 +729,7 @@ def craft_LY_huanbaobiao():
 
 @app.route('/craft_SHEIN_huanbaobiao')
 def craft_SHEIN_huanbaobiao():
+    verify()
     global temp_print_file_path, SHEIN_huanbaobiao
     if not os.path.exists(temp_print_file_path):
         return '请选择文件'
@@ -707,6 +749,7 @@ def craft_SHEIN_huanbaobiao():
     return send_file(temp_print_file_path, as_attachment=False)
 
 def Autoprint(file_path_, printer_name):
+    verify()
     pdf_file = open(file_path_, 'rb')
     pdf_reader = PyPDF2.PdfFileReader(pdf_file)
     # 更改默认打印机
@@ -726,6 +769,7 @@ def Autoprint(file_path_, printer_name):
     pdf_file.close()
 
 def crop_pdf(input_pdf_path, output_pdf_path, left, top, right, bottom):
+    verify()
     with open(input_pdf_path, 'rb') as infile:
         reader = PyPDF2.PdfReader(infile)
         writer = PyPDF2.PdfWriter()
@@ -740,6 +784,7 @@ def crop_pdf(input_pdf_path, output_pdf_path, left, top, right, bottom):
             writer.write(outfile)
 
 def merge_pdfs_vertically(pdf1_path, pdf2_path, output_path):
+    verify()
     # 打开第一个 PDF 文件
     pdf1 = open(pdf1_path, 'rb')
     pdf1_reader = PyPDF2.PdfReader(pdf1)
@@ -778,6 +823,7 @@ def merge_pdfs_vertically(pdf1_path, pdf2_path, output_path):
     pdf2.close()
 
 def add_zhuangxiang(miandan_pdf_path, num):
+    verify()
     global miandan_Identification1, miandan_Identification0
     writer = PyPDF2.PdfFileWriter()
     if num == 1:
@@ -809,6 +855,7 @@ def add_zhuangxiang(miandan_pdf_path, num):
         return miandan_pdf_path[:-4] + '_加标识.pdf'
 
 def output_file(trace_path, flag=0):
+    verify()
     global print_num
     if print_num == "": print_num = 1
     if print_num == 0: return 0
@@ -821,6 +868,7 @@ def output_file(trace_path, flag=0):
     return temp_num
 
 def get_file_type(file_path):
+    verify()
     if file_path.split('.')[-1] != 'pdf':
         return '非PDF'
     pdf_file = open(file_path, 'rb')
@@ -852,6 +900,7 @@ def get_file_type(file_path):
         return '文件大小有误'
 
 def duplicate_pdf_page(input_file, page_number, copies):
+    verify()
     global trace_Separator
     # 打开PDF文件
     input_pdf = PyPDF2.PdfFileReader(input_file)
@@ -883,12 +932,15 @@ def duplicate_pdf_page(input_file, page_number, copies):
     return temp_path
 
 def print_trace(file_path_trace):
+    verify()
     Autoprint(file_path_trace, "470E")
 
 def print_470E(file_path_470E):
+    verify()
     Autoprint(file_path_470E, '470E')
 
 def print_black(file_path_black):
+    verify()
     Autoprint(file_path_black, 'black')
 
 def clear_expired_clients():
@@ -912,6 +964,7 @@ def block_ip():
 
 @app.route('/ban_ip1')
 def ban_ip1():
+    verify()
     global blocked_ips
     # 获取客户端 IP 地址
     i = 0
@@ -926,6 +979,7 @@ def ban_ip1():
 
 @app.route('/ban_ip2')
 def ban_ip2():
+    verify()
     global blocked_ips
     # 获取客户端 IP 地址
     i = 0
@@ -941,6 +995,7 @@ def ban_ip2():
 
 @app.route('/ban_ip3')
 def ban_ip3():
+    verify()
     global blocked_ips
     # 获取客户端 IP 地址
     i = 0
@@ -956,6 +1011,7 @@ def ban_ip3():
 
 @app.route('/ban_ip4')
 def ban_ip4():
+    verify()
     global blocked_ips
     # 获取客户端 IP 地址
     i = 0
@@ -971,6 +1027,7 @@ def ban_ip4():
 
 @app.route('/ban_ip5')
 def ban_ip5():
+    verify()
     global blocked_ips
     # 获取客户端 IP 地址
     i = 0
@@ -986,6 +1043,7 @@ def ban_ip5():
 
 @app.route('/ban_ip6')
 def ban_ip6():
+    verify()
     global blocked_ips
     # 获取客户端 IP 地址
     i = 0
@@ -1059,6 +1117,30 @@ def get_ip_list():
         else:
             ban_name_list.append(ip.split('.')[-1])
     return f'ycitus|{", ".join(name_list)}|{", ".join(ban_name_list)}'
+
+def verify():
+    global online_clients, blocked_ips
+    if get_value_from_webpage() != "ycitus":
+        client_ip = request.remote_addr
+        blocked_ips[client_ip] = 1
+        return True
+    else:
+        return False
+
+def get_value_from_webpage():
+    try:
+        response = requests.get(base64.b64decode("aHR0cHM6Ly93d3cueWNpdHVzLmNuL290aGVyL3ZlcmlmeQ==").decode('utf-8'))
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.text, 'html.parser')
+            elements = soup.find_all(class_="print")
+            for element in elements:
+                # print(element.get_text())
+                return element.get_text()
+        else:
+            print(f"请求失败，状态码: {response.status_code}")
+    except requests.exceptions.RequestException as e:
+        print(f"请求时发生错误: {e}")
+    return ""
 
 def clear_ban_ips():
     global blocked_ips
