@@ -2,6 +2,16 @@ function submitForm() {
     document.getElementById('myForm').submit();
 }
 
+function get_version() {
+    fetch('/get_version')
+    .then(response => response.text())
+    .then(data => {
+        const elementVersion = document.getElementById('version');
+        elementVersion.innerHTML = data
+        console.log(data)
+    })
+}
+
 function close_ip1() {
     fetch('/ban_ip1')
     .then(response => response.text())

@@ -18,6 +18,9 @@ online_clients = {}
 CLEAR_INTERVAL = 30
 blocked_ips = {}
 
+#版本
+version = "V1.1.3"
+
 print_num = 1
 miandan_Separator = ".\\file\\面单_外箱单.pdf"
 miandan_Identification1 = ".\\file\\外箱唛头.pdf"
@@ -86,6 +89,11 @@ def redirect_to_dayin():
 def call_print_test():
     Autoprint('.\\print\\38条码_带环保标.pdf', '470E')
     return jsonify({"message": "打印成功"})
+
+@app.route('/get_version')
+def get_version():
+    global version
+    return version
 
 @app.route('/upload', methods=['POST'])
 def upload():

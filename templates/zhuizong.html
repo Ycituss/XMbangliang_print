@@ -26,6 +26,7 @@
 </html>
 
 <body>
+	<div class="top-left-text" id="version"></div>
 	<main>
 		<div class="content content-intro">
 			<div class="content-inner"><canvas id="background"></canvas>
@@ -173,6 +174,7 @@
 		<script>
 			window.onload = function() {
 				loadAll();
+				get_version();
 				setTimeout(updateClientCount, 3000);
 				setInterval(updateClientCount, 10000); // 每 10秒更新一次在线客户端数量
 			}

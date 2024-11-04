@@ -9,7 +9,6 @@ function print_babyteether() {
         setTimeout(changeZhuizongmessage, parseInt(data)*100)
         console.log(data)
     })
-    updateClientCount();
 }
 
 function print_1PC() {

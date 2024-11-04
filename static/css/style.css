@@ -7,6 +7,17 @@ html {
     --font-alt: 100 6vw/1 "Comic Sans MS", "Helvetica Neue", "Microsoft Yahei", "Microsoft Yahei", -apple-system, sans-serif
 }
 
+.top-left-text {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    color: #fff;
+    font-size: 150%;
+    background-color: rgba(255, 255, 255, 0);
+    z-index: 9999;
+  }
+
 .fade {
     opacity: 0;
     transition: all 1s;
