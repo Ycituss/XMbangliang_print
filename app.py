@@ -19,7 +19,7 @@ CLEAR_INTERVAL = 30
 blocked_ips = {}
 
 #版本
-version = "V1.1.4"
+version = "V1.1.5"
 
 print_num = 1
 miandan_Separator = ".\\file\\面单_外箱单.pdf"
@@ -126,9 +126,11 @@ def upload():
     elif last_ip_digit == '123':
         user_name = '阿莫'
     elif last_ip_digit == '180':
-        user_name = '小蒋'
+        user_name = '小刘'
     elif last_ip_digit == '181':
         user_name = '小黎'
+    elif last_ip_digit == '182':
+        user_name = '可欣'
     new_filename = f'{user_name}_{file.filename}'
     formatted_date = datetime.datetime.now().strftime('%y%m%d')
     folder_path = '.\\print\\'+formatted_date+'\\'+user_name+'\\'
@@ -172,9 +174,11 @@ def upload11():
     elif last_ip_digit == '123':
         user_name = '阿莫'
     elif last_ip_digit == '180':
-        user_name = '小蒋'
+        user_name = '小刘'
     elif last_ip_digit == '181':
         user_name = '小黎'
+    elif last_ip_digit == '182':
+        user_name = '可欣'
     new_filename = f'{user_name}_{file.filename}'
     formatted_date = datetime.datetime.now().strftime('%y%m%d')
     folder_path = '.\\print\\'+formatted_date+'\\'+user_name+'\\'
@@ -1151,9 +1155,11 @@ def get_ip_list():
         elif ip == '192.168.31.123':
             name_list.append('阿莫')
         elif ip == '192.168.31.180':
-            name_list.append('小蒋')
+            name_list.append('小刘')
         elif ip == '192.168.31.181':
             name_list.append('小黎')
+        elif ip == '192.168.31.182':
+            name_list.append('可欣')
         else:
             name_list.append(ip.split('.')[-1])
     ban_ips = list(blocked_ips.keys())
@@ -1172,9 +1178,11 @@ def get_ip_list():
         elif ip == '192.168.31.123':
             ban_name_list.append('阿莫')
         elif ip == '192.168.31.180':
-            ban_name_list.append('小蒋')
+            ban_name_list.append('小刘')
         elif ip == '192.168.31.181':
             ban_name_list.append('小黎')
+        elif ip == '192.168.31.182':
+            ban_name_list.append('可欣')
         else:
             ban_name_list.append(ip.split('.')[-1])
     return f'ycitus|{", ".join(name_list)}|{", ".join(ban_name_list)}'
