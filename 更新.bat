@@ -1,4 +1,6 @@
 taskkill /F /IM python.exe
-git pull origin main
+git fetch --all
+git reset --hard origin/main
+git pull
 .\BLprint.exe
 pause
