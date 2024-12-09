@@ -19,7 +19,7 @@ CLEAR_INTERVAL = 30
 blocked_ips = {}
 
 #版本
-version = "V1.1.5"
+version = "V1.1.6"
 
 print_num = 1
 miandan_Separator = ".\\file\\面单_外箱单.pdf"
