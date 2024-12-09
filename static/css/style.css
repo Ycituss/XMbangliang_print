@@ -573,6 +573,13 @@ main {
     font-size: 2rem
 }
 
+#card li.quarterX2 {
+    height: 95px;
+    width: 200px;
+    line-height: 95px;
+    font-size: 2rem
+}
+
 #card li.quarterX3 {
     height: 95px;
     width: 305px;

@@ -26,6 +26,7 @@ miandan_Separator = ".\\file\\面单_外箱单.pdf"
 miandan_Identification1 = ".\\file\\外箱唛头.pdf"
 miandan_Identification0 = ".\\file\\包裹面单.pdf"
 BLGH_huanbaobiao = ".\\file\\邦良干花专用全环保标模版.pdf"
+BLAH_huanbaobiao = ".\\file\\邦良阿华全环保标模版.pdf"
 BL_huanbaobiao = ".\\file\\邦良全环保标模版.pdf"
 MH_huanbaobiao = ".\\file\\盟豪全环保标模版.pdf"
 PP_huanbaobiao = ".\\file\\磐品全环保标模版.pdf"
@@ -451,6 +452,34 @@ def print_BLGH_huanbaobiao():
         with open(temp_print_file_path[:-4] + '_已打印.pdf', 'w') as f:
             pass
     merge_pdfs_vertically(BLGH_huanbaobiao, temp_print_file_path, temp_print_file_path[:-4] + '_已打印.pdf')
+
+    temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
+    temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
+    print_470E(temp_print_file_path)
+    return '打印中，请稍后|'+ str(50+2*temp_print_pdf.getNumPages())
+
+@app.route('/print_BLAH_huanbaobiao')
+def print_BLAH_huanbaobiao():
+    verify()
+    global temp_print_file_path, BLAH_huanbaobiao
+    if not os.path.exists(temp_print_file_path):
+        return '请选择文件'
+    if temp_print_file_path[-7:-4] == '已打印':
+        return '请勿重复点击'
+    if get_file_type(temp_print_file_path) == '条码_带环保标':
+        return '正在合成，请勿重复点击'
+    if get_file_type(temp_print_file_path) != '条码' and get_file_type(temp_print_file_path) != 'TK条码':
+        return '当前文件不是条码'
+    if get_file_type(temp_print_file_path) == 'TK条码':
+        shutil.copy(temp_print_file_path, temp_print_file_path[:-4] + '_已打印.pdf')
+        temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
+        print_470E(temp_print_file_path)
+        temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
+        return '打印中，请稍后|'+ str(5+0.1*temp_print_pdf.getNumPages())
+    if not os.path.exists(temp_print_file_path[:-4] + '_已打印.pdf'):
+        with open(temp_print_file_path[:-4] + '_已打印.pdf', 'w') as f:
+            pass
+    merge_pdfs_vertically(BLAH_huanbaobiao, temp_print_file_path, temp_print_file_path[:-4] + '_已打印.pdf')
 
     temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
     temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)

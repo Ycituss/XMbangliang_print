@@ -402,6 +402,20 @@ function print_BLGH_huanbaobiao() {
     updateClientCount();
 }
 
+function print_BLAH_huanbaobiao() {
+    document.getElementById('fileTypeMT').innerText = '正在合成，请勿重复点击'
+    fetch('/print_BLAH_huanbaobiao')
+   .then(response => response.text())
+   .then(data => {
+        document.getElementById('fileTypeMT').innerText = data.split('|')[0]
+        if(data.split('|').length > 1) {
+            setTimeout(printComplete, parseInt(data.split('|')[1])*100)
+        }
+        console.log(data);
+    });
+    updateClientCount();
+}
+
 function craft_miandan() {
     document.getElementById('fileTypeMT').innerText = '合成完成'
     const link = document.createElement('a');
