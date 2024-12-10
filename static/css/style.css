@@ -750,7 +750,7 @@ li#quarter-first span {
     }
 
     #card ul {
-        height: 300px;
+        height: 200px;
         transition: width .5s ease
     }
 
@@ -980,7 +980,7 @@ li#quarter-first span {
     }
 
     #card ul {
-        height: 405px
+        height: 305px
     }
     #card #dayinul {
         height: 305px;
@@ -1140,7 +1140,7 @@ li#quarter-first span {
     }
 
     #card ul {
-        height: 510px
+        height: 410px
     }
     
     #card #dayinul {
