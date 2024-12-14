@@ -116,24 +116,14 @@ def upload():
     ip = ip.split('.')[-1]
     last_ip_digit = ip.split('.')[-1]
     user_name = 'temp'
-    if last_ip_digit == '122' or last_ip_digit == '1':
-        user_name = '阿随'
-    elif last_ip_digit == '168':
-        user_name = '阿杰'
-    elif last_ip_digit == '169':
-        user_name = '大杨哥'
-    elif last_ip_digit == '170':
-        user_name = '阿华'
-    elif last_ip_digit == '125':
-        user_name = '峰哥'
-    elif last_ip_digit == '123':
-        user_name = '阿莫'
-    elif last_ip_digit == '180':
-        user_name = '小刘'
-    elif last_ip_digit == '181':
-        user_name = '小黎'
-    elif last_ip_digit == '182':
-        user_name = '可欣'
+    if last_ip_digit == '13' or last_ip_digit == '1':
+        user_name = '黎'
+    elif last_ip_digit == '14':
+        user_name = '峰'
+    elif last_ip_digit == '15':
+        user_name = '随'
+    elif last_ip_digit == '16':
+        user_name = '周'
     new_filename = f'{user_name}_{file.filename}'
     formatted_date = datetime.datetime.now().strftime('%y%m%d')
     folder_path = '.\\print\\'+formatted_date+'\\'+user_name+'\\'
@@ -1278,47 +1268,27 @@ def get_ip_list():
     ips = list(online_clients.keys())
     name_list = []
     for ip in ips:
-        if ip == '192.168.31.122':
-            name_list.append('阿随')
-        elif ip == '192.168.31.168':
-            name_list.append('阿杰')
-        elif ip == '192.168.31.169':
-            name_list.append('大杨哥')
-        elif ip == '192.168.31.170':
-            name_list.append('阿华')
-        elif ip == '192.168.31.125':
-            name_list.append('峰哥')
-        elif ip == '192.168.31.123':
-            name_list.append('阿莫')
-        elif ip == '192.168.31.180':
-            name_list.append('小刘')
-        elif ip == '192.168.31.181':
-            name_list.append('小黎')
-        elif ip == '192.168.31.182':
-            name_list.append('可欣')
+        if ip == '192.168.1.13':
+            name_list.append('黎')
+        elif ip == '192.168.1.14':
+            name_list.append('峰')
+        elif ip == '192.168.1.15':
+            name_list.append('随')
+        elif ip == '192.168.1.16':
+            name_list.append('周')
         else:
             name_list.append(ip.split('.')[-1])
     ban_ips = list(blocked_ips.keys())
     ban_name_list = []
     for ip in ban_ips:
-        if ip == '192.168.31.122':
-            ban_name_list.append('阿随')
-        elif ip == '192.168.31.168':
-            ban_name_list.append('阿杰')
-        elif ip == '192.168.31.169':
-            ban_name_list.append('大杨哥')
-        elif ip == '192.168.31.170':
-            ban_name_list.append('阿华')
-        elif ip == '192.168.31.125':
-            ban_name_list.append('峰哥')
-        elif ip == '192.168.31.123':
-            ban_name_list.append('阿莫')
-        elif ip == '192.168.31.180':
-            ban_name_list.append('小刘')
-        elif ip == '192.168.31.181':
-            ban_name_list.append('小黎')
-        elif ip == '192.168.31.182':
-            ban_name_list.append('可欣')
+        if ip == '192.168.1.13':
+            ban_name_list.append('黎')
+        elif ip == '192.168.1.14':
+            ban_name_list.append('峰')
+        elif ip == '192.168.1.15':
+            ban_name_list.append('随')
+        elif ip == '192.168.1.16':
+            ban_name_list.append('周')
         else:
             ban_name_list.append(ip.split('.')[-1])
     return f'ycitus|{", ".join(name_list)}|{", ".join(ban_name_list)}'
