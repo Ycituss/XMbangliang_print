@@ -28,8 +28,8 @@ miandan_Identification0 = ".\\file\\包裹面单.pdf"
 BLGH_huanbaobiao = ".\\file\\邦良干花专用全环保标模版.pdf"
 BLAH_huanbaobiao = ".\\file\\邦良阿华全环保标模版.pdf"
 BL_huanbaobiao = ".\\file\\邦良全环保标模版.pdf"
-XG_huanbaobiao = ".\\file\\XG全环保标模版.pdf"
-XGZZ_huanbaobiao = ".\\file\\XGZZ全环保标模版.pdf"
+DJ_huanbaobiao = ".\\file\\DJ全环保标模版.pdf"
+DJZZ_huanbaobiao = ".\\file\\DJZZ全环保标模版.pdf"
 MH_huanbaobiao = ".\\file\\盟豪全环保标模版.pdf"
 PP_huanbaobiao = ".\\file\\磐品全环保标模版.pdf"
 YZ_huanbaobiao = ".\\file\\云准全环保标模版.pdf"
@@ -506,10 +506,10 @@ def print_BL_huanbaobiao():
     print_470E(temp_print_file_path)
     return '打印中，请稍后|'+ str(50+2*temp_print_pdf.getNumPages())
 
-@app.route('/print_XG_huanbaobiao')
-def print_XG_huanbaobiao():
+@app.route('/print_DJ_huanbaobiao')
+def print_DJ_huanbaobiao():
     verify()
-    global temp_print_file_path, XG_huanbaobiao
+    global temp_print_file_path, DJ_huanbaobiao
     if not os.path.exists(temp_print_file_path):
         return '请选择文件'
     if temp_print_file_path[-7:-4] == '已打印':
@@ -527,7 +527,7 @@ def print_XG_huanbaobiao():
     if not os.path.exists(temp_print_file_path[:-4] + '_已打印.pdf'):
         with open(temp_print_file_path[:-4] + '_已打印.pdf', 'w') as f:
             pass
-    merge_pdfs_vertically(XG_huanbaobiao, temp_print_file_path, temp_print_file_path[:-4] + '_已打印.pdf')
+    merge_pdfs_vertically(DJ_huanbaobiao, temp_print_file_path, temp_print_file_path[:-4] + '_已打印.pdf')
 
     temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
     temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
@@ -535,10 +535,10 @@ def print_XG_huanbaobiao():
     return '打印中，请稍后|'+ str(50+2*temp_print_pdf.getNumPages())
 
 
-@app.route('/print_XGZZ_huanbaobiao')
-def print_XGZZ_huanbaobiao():
+@app.route('/print_DJZZ_huanbaobiao')
+def print_DJZZ_huanbaobiao():
     verify()
-    global temp_print_file_path, XGZZ_huanbaobiao
+    global temp_print_file_path, DJZZ_huanbaobiao
     if not os.path.exists(temp_print_file_path):
         return '请选择文件'
     if temp_print_file_path[-7:-4] == '已打印':
@@ -556,7 +556,7 @@ def print_XGZZ_huanbaobiao():
     if not os.path.exists(temp_print_file_path[:-4] + '_已打印.pdf'):
         with open(temp_print_file_path[:-4] + '_已打印.pdf', 'w') as f:
             pass
-    merge_pdfs_vertically(XGZZ_huanbaobiao, temp_print_file_path, temp_print_file_path[:-4] + '_已打印.pdf')
+    merge_pdfs_vertically(DJZZ_huanbaobiao, temp_print_file_path, temp_print_file_path[:-4] + '_已打印.pdf')
 
     temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
     temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
@@ -765,10 +765,10 @@ def craft_BL_huanbaobiao():
     temp_print_file_path = temp_print_file_path[:-4] + '_带环保标.pdf'
     return send_file(temp_print_file_path, as_attachment=False)
 
-@app.route('/craft_XG_huanbaobiao')
-def craft_XG_huanbaobiao():
+@app.route('/craft_DJ_huanbaobiao')
+def craft_DJ_huanbaobiao():
     verify()
-    global temp_print_file_path, XG_huanbaobiao
+    global temp_print_file_path, DJ_huanbaobiao
     if not os.path.exists(temp_print_file_path):
         return '请选择文件'
     if temp_print_file_path[-10:-4] == '带环保标':
@@ -784,15 +784,15 @@ def craft_XG_huanbaobiao():
     if not os.path.exists(temp_print_file_path[:-4] + '_带环保标.pdf'):
         with open(temp_print_file_path[:-4] + '_带环保标.pdf', 'w') as f:
             pass
-    merge_pdfs_vertically(XG_huanbaobiao, temp_print_file_path, temp_print_file_path[:-4] + '_带环保标.pdf')
+    merge_pdfs_vertically(DJ_huanbaobiao, temp_print_file_path, temp_print_file_path[:-4] + '_带环保标.pdf')
 
     temp_print_file_path = temp_print_file_path[:-4] + '_带环保标.pdf'
     return send_file(temp_print_file_path, as_attachment=False)
 
-@app.route('/craft_XGZZ_huanbaobiao')
-def craft_XGZZ_huanbaobiao():
+@app.route('/craft_DJZZ_huanbaobiao')
+def craft_DJZZ_huanbaobiao():
     verify()
-    global temp_print_file_path, XGZZ_huanbaobiao
+    global temp_print_file_path, DJZZ_huanbaobiao
     if not os.path.exists(temp_print_file_path):
         return '请选择文件'
     if temp_print_file_path[-10:-4] == '带环保标':
@@ -808,7 +808,7 @@ def craft_XGZZ_huanbaobiao():
     if not os.path.exists(temp_print_file_path[:-4] + '_带环保标.pdf'):
         with open(temp_print_file_path[:-4] + '_带环保标.pdf', 'w') as f:
             pass
-    merge_pdfs_vertically(XGZZ_huanbaobiao, temp_print_file_path, temp_print_file_path[:-4] + '_带环保标.pdf')
+    merge_pdfs_vertically(DJZZ_huanbaobiao, temp_print_file_path, temp_print_file_path[:-4] + '_带环保标.pdf')
 
     temp_print_file_path = temp_print_file_path[:-4] + '_带环保标.pdf'
     return send_file(temp_print_file_path, as_attachment=False)
