@@ -389,9 +389,9 @@ function print_BL_huanbaobiao() {
 }
 
 
-function print_XG_huanbaobiao() {
+function print_DJ_huanbaobiao() {
     document.getElementById('fileTypeMT').innerText = '正在合成，请勿重复点击'
-    fetch('/print_XG_huanbaobiao')
+    fetch('/print_DJ_huanbaobiao')
    .then(response => response.text())
    .then(data => {
         document.getElementById('fileTypeMT').innerText = data.split('|')[0]
@@ -474,10 +474,10 @@ function craft_BL_huanbaobiao() {
     document.body.removeChild(link);
 }
 
-function craft_XG_huanbaobiao() {
+function craft_DJ_huanbaobiao() {
     document.getElementById('fileTypeMT').innerText = '合成完成';
     const link = document.createElement('a');
-    link.href = '/craft_XG_huanbaobiao';
+    link.href = '/craft_DJ_huanbaobiao';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
