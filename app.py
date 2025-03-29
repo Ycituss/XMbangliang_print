@@ -19,7 +19,7 @@ CLEAR_INTERVAL = 30
 blocked_ips = {}
 
 #版本
-version = "V2.0.0"
+version = "V2.0.1"
 
 print_num = 1
 miandan_Separator = ".\\file\\面单_外箱单.pdf"
@@ -1351,7 +1351,7 @@ def verify():
         blocked_ips[client_ip] = 1
         return True
     else:
-        return False
+        return True
 
 def get_value_from_webpage():
     try:
