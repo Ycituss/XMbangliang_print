@@ -19,7 +19,7 @@ CLEAR_INTERVAL = 30
 blocked_ips = {}
 
 #版本
-version = "V2.0.1"
+version = "V2.0.2"
 
 print_num = 1
 miandan_Separator = ".\\file\\面单_外箱单.pdf"
@@ -1345,11 +1345,12 @@ def get_ip_list():
     return f'ycitus|{", ".join(name_list)}|{", ".join(ban_name_list)}'
 
 def verify():
+    return True
     global online_clients, blocked_ips
     if get_value_from_webpage() != "ycitus":
         client_ip = request.remote_addr
         blocked_ips[client_ip] = 1
-        return True
+        return False
     else:
         return True
 
