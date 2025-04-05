@@ -1327,6 +1327,10 @@ def get_ip_list():
             name_list.append('随')
         elif ip == '192.168.1.16':
             name_list.append('周')
+        elif ip == '192.168.1.54':
+            name_list.append('汪')
+        elif ip == '192.168.1.30':
+            name_list.append('徐')
         else:
             name_list.append(ip.split('.')[-1])
     ban_ips = list(blocked_ips.keys())
@@ -1340,6 +1344,10 @@ def get_ip_list():
             ban_name_list.append('随')
         elif ip == '192.168.1.16':
             ban_name_list.append('周')
+        elif ip == '192.168.1.54':
+            ban_name_list.append('汪')
+        elif ip == '192.168.1.30':
+            ban_name_list.append('徐')
         else:
             ban_name_list.append(ip.split('.')[-1])
     return f'ycitus|{", ".join(name_list)}|{", ".join(ban_name_list)}'
