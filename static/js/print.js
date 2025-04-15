@@ -417,6 +417,34 @@ function print_XG_huanbaobiao() {
     updateClientCount();
 }
 
+function print_XD_huanbaobiao() {
+    document.getElementById('fileTypeMT').innerText = '正在合成，请勿重复点击'
+    fetch('/print_XD_huanbaobiao')
+   .then(response => response.text())
+   .then(data => {
+        document.getElementById('fileTypeMT').innerText = data.split('|')[0]
+        if(data.split('|').length > 1) {
+            setTimeout(printComplete, parseInt(data.split('|')[1])*100)
+        }
+        console.log(data);
+    });
+    updateClientCount();
+}
+
+function print_XF_huanbaobiao() {
+    document.getElementById('fileTypeMT').innerText = '正在合成，请勿重复点击'
+    fetch('/print_XF_huanbaobiao')
+   .then(response => response.text())
+   .then(data => {
+        document.getElementById('fileTypeMT').innerText = data.split('|')[0]
+        if(data.split('|').length > 1) {
+            setTimeout(printComplete, parseInt(data.split('|')[1])*100)
+        }
+        console.log(data);
+    });
+    updateClientCount();
+}
+
 function print_XGZZ_huanbaobiao() {
     document.getElementById('fileTypeMT').innerText = '正在合成，请勿重复点击'
     fetch('/print_XGZZ_huanbaobiao')
@@ -501,6 +529,24 @@ function craft_XG_huanbaobiao() {
     document.getElementById('fileTypeMT').innerText = '合成完成';
     const link = document.createElement('a');
     link.href = '/craft_XG_huanbaobiao';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function craft_XD_huanbaobiao() {
+    document.getElementById('fileTypeMT').innerText = '合成完成';
+    const link = document.createElement('a');
+    link.href = '/craft_XD_huanbaobiao';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function craft_XF_huanbaobiao() {
+    document.getElementById('fileTypeMT').innerText = '合成完成';
+    const link = document.createElement('a');
+    link.href = '/craft_XF_huanbaobiao';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

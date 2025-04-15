@@ -19,7 +19,7 @@ CLEAR_INTERVAL = 30
 blocked_ips = {}
 
 #版本
-version = "V2.0.2"
+version = "V2.1.0"
 
 print_num = 1
 miandan_Separator = ".\\file\\面单_外箱单.pdf"
@@ -30,6 +30,8 @@ BLAH_huanbaobiao = ".\\file\\邦良阿华全环保标模版.pdf"
 BL_huanbaobiao = ".\\file\\邦良全环保标模版.pdf"
 DJ_huanbaobiao = ".\\file\\DJ全环保标模版.pdf"
 XG_huanbaobiao = ".\\file\\XG全环保标模版.pdf"
+XD_huanbaobiao = ".\\file\\XD全环保标模版.pdf"
+XF_huanbaobiao = ".\\file\\XF全环保标模版.pdf"
 DJZZ_huanbaobiao = ".\\file\\DJZZ全环保标模版.pdf"
 MH_huanbaobiao = ".\\file\\盟豪全环保标模版.pdf"
 PP_huanbaobiao = ".\\file\\磐品全环保标模版.pdf"
@@ -117,7 +119,7 @@ def upload():
     ip = ip.split('.')[-1]
     last_ip_digit = ip.split('.')[-1]
     user_name = 'temp'
-    if last_ip_digit == '13' or last_ip_digit == '1':
+    if last_ip_digit == '13':
         user_name = '黎'
     elif last_ip_digit == '14':
         user_name = '峰'
@@ -125,6 +127,14 @@ def upload():
         user_name = '随'
     elif last_ip_digit == '16':
         user_name = '周'
+    elif last_ip_digit == '54':
+        user_name = '汪'
+    elif last_ip_digit == '30':
+        user_name = '徐'
+    elif last_ip_digit == '88':
+        user_name = '万欣'
+    elif last_ip_digit == '47':
+        user_name = '郭馨'
     new_filename = f'{user_name}_{file.filename}'
     formatted_date = datetime.datetime.now().strftime('%y%m%d')
     folder_path = '.\\print\\'+formatted_date+'\\'+user_name+'\\'
@@ -563,6 +573,62 @@ def print_XG_huanbaobiao():
     print_470E(temp_print_file_path)
     return '打印中，请稍后|'+ str(50+2*temp_print_pdf.getNumPages())
 
+@app.route('/print_XD_huanbaobiao')
+def print_XD_huanbaobiao():
+    verify()
+    global temp_print_file_path, XD_huanbaobiao
+    if not os.path.exists(temp_print_file_path):
+        return '请选择文件'
+    if temp_print_file_path[-7:-4] == '已打印':
+        return '请勿重复点击'
+    if get_file_type(temp_print_file_path) == '条码_带环保标':
+        return '正在合成，请勿重复点击'
+    if get_file_type(temp_print_file_path) != '条码' and get_file_type(temp_print_file_path) != 'TK条码':
+        return '当前文件不是条码'
+    if get_file_type(temp_print_file_path) == 'TK条码':
+        shutil.copy(temp_print_file_path, temp_print_file_path[:-4] + '_已打印.pdf')
+        temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
+        print_470E(temp_print_file_path)
+        temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
+        return '打印中，请稍后|'+ str(5+0.1*temp_print_pdf.getNumPages())
+    if not os.path.exists(temp_print_file_path[:-4] + '_已打印.pdf'):
+        with open(temp_print_file_path[:-4] + '_已打印.pdf', 'w') as f:
+            pass
+    merge_pdfs_vertically(XD_huanbaobiao, temp_print_file_path, temp_print_file_path[:-4] + '_已打印.pdf')
+
+    temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
+    temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
+    print_470E(temp_print_file_path)
+    return '打印中，请稍后|'+ str(50+2*temp_print_pdf.getNumPages())
+
+@app.route('/print_XF_huanbaobiao')
+def print_XF_huanbaobiao():
+    verify()
+    global temp_print_file_path, XF_huanbaobiao
+    if not os.path.exists(temp_print_file_path):
+        return '请选择文件'
+    if temp_print_file_path[-7:-4] == '已打印':
+        return '请勿重复点击'
+    if get_file_type(temp_print_file_path) == '条码_带环保标':
+        return '正在合成，请勿重复点击'
+    if get_file_type(temp_print_file_path) != '条码' and get_file_type(temp_print_file_path) != 'TK条码':
+        return '当前文件不是条码'
+    if get_file_type(temp_print_file_path) == 'TK条码':
+        shutil.copy(temp_print_file_path, temp_print_file_path[:-4] + '_已打印.pdf')
+        temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
+        print_470E(temp_print_file_path)
+        temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
+        return '打印中，请稍后|'+ str(5+0.1*temp_print_pdf.getNumPages())
+    if not os.path.exists(temp_print_file_path[:-4] + '_已打印.pdf'):
+        with open(temp_print_file_path[:-4] + '_已打印.pdf', 'w') as f:
+            pass
+    merge_pdfs_vertically(XF_huanbaobiao, temp_print_file_path, temp_print_file_path[:-4] + '_已打印.pdf')
+
+    temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
+    temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
+    print_470E(temp_print_file_path)
+    return '打印中，请稍后|'+ str(50+2*temp_print_pdf.getNumPages())
+
 @app.route('/print_DJZZ_huanbaobiao')
 def print_DJZZ_huanbaobiao():
     verify()
@@ -840,6 +906,55 @@ def craft_XG_huanbaobiao():
 
     temp_print_file_path = temp_print_file_path[:-4] + '_带环保标.pdf'
     return send_file(temp_print_file_path, as_attachment=False)
+
+@app.route('/craft_XD_huanbaobiao')
+def craft_XD_huanbaobiao():
+    verify()
+    global temp_print_file_path, XD_huanbaobiao
+    if not os.path.exists(temp_print_file_path):
+        return '请选择文件'
+    if temp_print_file_path[-10:-4] == '带环保标':
+        return '请勿重复点击'
+    if get_file_type(temp_print_file_path) == '条码_带环保标':
+        return '正在合成，请勿重复点击'
+    if get_file_type(temp_print_file_path)!= '条码' and get_file_type(temp_print_file_path)!= 'TK条码':
+        return '当前文件不是条码'
+    if get_file_type(temp_print_file_path) == 'TK条码':
+        shutil.copy(temp_print_file_path, temp_print_file_path[:-4] + '_带环保标.pdf')
+        temp_print_file_path = temp_print_file_path[:-4] + '_带环保标.pdf'
+        return send_file(temp_print_file_path, as_attachment=False)
+    if not os.path.exists(temp_print_file_path[:-4] + '_带环保标.pdf'):
+        with open(temp_print_file_path[:-4] + '_带环保标.pdf', 'w') as f:
+            pass
+    merge_pdfs_vertically(XD_huanbaobiao, temp_print_file_path, temp_print_file_path[:-4] + '_带环保标.pdf')
+
+    temp_print_file_path = temp_print_file_path[:-4] + '_带环保标.pdf'
+    return send_file(temp_print_file_path, as_attachment=False)
+
+@app.route('/craft_XF_huanbaobiao')
+def craft_XF_huanbaobiao():
+    verify()
+    global temp_print_file_path, XF_huanbaobiao
+    if not os.path.exists(temp_print_file_path):
+        return '请选择文件'
+    if temp_print_file_path[-10:-4] == '带环保标':
+        return '请勿重复点击'
+    if get_file_type(temp_print_file_path) == '条码_带环保标':
+        return '正在合成，请勿重复点击'
+    if get_file_type(temp_print_file_path)!= '条码' and get_file_type(temp_print_file_path)!= 'TK条码':
+        return '当前文件不是条码'
+    if get_file_type(temp_print_file_path) == 'TK条码':
+        shutil.copy(temp_print_file_path, temp_print_file_path[:-4] + '_带环保标.pdf')
+        temp_print_file_path = temp_print_file_path[:-4] + '_带环保标.pdf'
+        return send_file(temp_print_file_path, as_attachment=False)
+    if not os.path.exists(temp_print_file_path[:-4] + '_带环保标.pdf'):
+        with open(temp_print_file_path[:-4] + '_带环保标.pdf', 'w') as f:
+            pass
+    merge_pdfs_vertically(XF_huanbaobiao, temp_print_file_path, temp_print_file_path[:-4] + '_带环保标.pdf')
+
+    temp_print_file_path = temp_print_file_path[:-4] + '_带环保标.pdf'
+    return send_file(temp_print_file_path, as_attachment=False)
+
 @app.route('/craft_DJZZ_huanbaobiao')
 def craft_DJZZ_huanbaobiao():
     verify()
