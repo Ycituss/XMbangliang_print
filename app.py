@@ -32,6 +32,7 @@ DJ_huanbaobiao = ".\\file\\DJ全环保标模版.pdf"
 XG_huanbaobiao = ".\\file\\XG全环保标模版.pdf"
 XD_huanbaobiao = ".\\file\\XD全环保标模版.pdf"
 XF_huanbaobiao = ".\\file\\XF全环保标模版.pdf"
+XGuo_huanbaobiao = ".\\file\\XGuo全环保标模版.pdf"
 DJZZ_huanbaobiao = ".\\file\\DJZZ全环保标模版.pdf"
 MH_huanbaobiao = ".\\file\\盟豪全环保标模版.pdf"
 PP_huanbaobiao = ".\\file\\磐品全环保标模版.pdf"
@@ -125,10 +126,12 @@ def upload():
         user_name = '峰'
     elif last_ip_digit == '15':
         user_name = '随'
-    elif last_ip_digit == '16':
+    elif last_ip_digit == '104':
         user_name = '周'
-    elif last_ip_digit == '54':
+    elif last_ip_digit == '103':
         user_name = '汪'
+    elif last_ip_digit == '53':
+        user_name = '刘'
     elif last_ip_digit == '30':
         user_name = '徐'
     elif last_ip_digit == '88':
@@ -629,6 +632,34 @@ def print_XF_huanbaobiao():
     print_470E(temp_print_file_path)
     return '打印中，请稍后|'+ str(50+2*temp_print_pdf.getNumPages())
 
+@app.route('/print_XGuo_huanbaobiao')
+def print_XGuo_huanbaobiao():
+    verify()
+    global temp_print_file_path, XGuo_huanbaobiao
+    if not os.path.exists(temp_print_file_path):
+        return '请选择文件'
+    if temp_print_file_path[-7:-4] == '已打印':
+        return '请勿重复点击'
+    if get_file_type(temp_print_file_path) == '条码_带环保标':
+        return '正在合成，请勿重复点击'
+    if get_file_type(temp_print_file_path) != '条码' and get_file_type(temp_print_file_path) != 'TK条码':
+        return '当前文件不是条码'
+    if get_file_type(temp_print_file_path) == 'TK条码':
+        shutil.copy(temp_print_file_path, temp_print_file_path[:-4] + '_已打印.pdf')
+        temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
+        print_470E(temp_print_file_path)
+        temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
+        return '打印中，请稍后|'+ str(5+0.1*temp_print_pdf.getNumPages())
+    if not os.path.exists(temp_print_file_path[:-4] + '_已打印.pdf'):
+        with open(temp_print_file_path[:-4] + '_已打印.pdf', 'w') as f:
+            pass
+    merge_pdfs_vertically(XGuo_huanbaobiao, temp_print_file_path, temp_print_file_path[:-4] + '_已打印.pdf')
+
+    temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
+    temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
+    print_470E(temp_print_file_path)
+    return '打印中，请稍后|'+ str(50+2*temp_print_pdf.getNumPages())
+
 @app.route('/print_DJZZ_huanbaobiao')
 def print_DJZZ_huanbaobiao():
     verify()
@@ -951,6 +982,30 @@ def craft_XF_huanbaobiao():
         with open(temp_print_file_path[:-4] + '_带环保标.pdf', 'w') as f:
             pass
     merge_pdfs_vertically(XF_huanbaobiao, temp_print_file_path, temp_print_file_path[:-4] + '_带环保标.pdf')
+
+    temp_print_file_path = temp_print_file_path[:-4] + '_带环保标.pdf'
+    return send_file(temp_print_file_path, as_attachment=False)
+
+@app.route('/craft_XGuo_huanbaobiao')
+def craft_XGuo_huanbaobiao():
+    verify()
+    global temp_print_file_path, XGuo_huanbaobiao
+    if not os.path.exists(temp_print_file_path):
+        return '请选择文件'
+    if temp_print_file_path[-10:-4] == '带环保标':
+        return '请勿重复点击'
+    if get_file_type(temp_print_file_path) == '条码_带环保标':
+        return '正在合成，请勿重复点击'
+    if get_file_type(temp_print_file_path)!= '条码' and get_file_type(temp_print_file_path)!= 'TK条码':
+        return '当前文件不是条码'
+    if get_file_type(temp_print_file_path) == 'TK条码':
+        shutil.copy(temp_print_file_path, temp_print_file_path[:-4] + '_带环保标.pdf')
+        temp_print_file_path = temp_print_file_path[:-4] + '_带环保标.pdf'
+        return send_file(temp_print_file_path, as_attachment=False)
+    if not os.path.exists(temp_print_file_path[:-4] + '_带环保标.pdf'):
+        with open(temp_print_file_path[:-4] + '_带环保标.pdf', 'w') as f:
+            pass
+    merge_pdfs_vertically(XGuo_huanbaobiao, temp_print_file_path, temp_print_file_path[:-4] + '_带环保标.pdf')
 
     temp_print_file_path = temp_print_file_path[:-4] + '_带环保标.pdf'
     return send_file(temp_print_file_path, as_attachment=False)
@@ -1440,10 +1495,12 @@ def get_ip_list():
             name_list.append('峰')
         elif ip == '192.168.1.15':
             name_list.append('随')
-        elif ip == '192.168.1.16':
+        elif ip == '192.168.1.104':
             name_list.append('周')
-        elif ip == '192.168.1.54':
+        elif ip == '192.168.1.103':
             name_list.append('汪')
+        elif ip == '192.168.1.53':
+            name_list.append('刘')
         elif ip == '192.168.1.30':
             name_list.append('徐')
         elif ip == '192.168.1.88':
@@ -1461,10 +1518,12 @@ def get_ip_list():
             ban_name_list.append('峰')
         elif ip == '192.168.1.15':
             ban_name_list.append('随')
-        elif ip == '192.168.1.16':
+        elif ip == '192.168.1.104':
             ban_name_list.append('周')
-        elif ip == '192.168.1.54':
+        elif ip == '192.168.1.103':
             ban_name_list.append('汪')
+        elif ip == '192.168.1.53':
+            ban_name_list.append('刘')
         elif ip == '192.168.1.30':
             ban_name_list.append('徐')
         elif ip == '192.168.1.88':
