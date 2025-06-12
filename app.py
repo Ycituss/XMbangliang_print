@@ -124,13 +124,13 @@ def upload():
         user_name = '黎'
     elif last_ip_digit == '14':
         user_name = '峰'
-    elif last_ip_digit == '15':
+    elif last_ip_digit == '61':
         user_name = '随'
     elif last_ip_digit == '104':
         user_name = '周'
     elif last_ip_digit == '103':
         user_name = '汪'
-    elif last_ip_digit == '53':
+    elif last_ip_digit == '123':
         user_name = '刘'
     elif last_ip_digit == '30':
         user_name = '徐'
@@ -168,24 +168,6 @@ def upload11():
     ip = ip.split('.')[-1]
     last_ip_digit = ip.split('.')[-1]
     user_name = 'temp'
-    if last_ip_digit == '122' or last_ip_digit == '1':
-        user_name = '阿随'
-    elif last_ip_digit == '168':
-        user_name = '阿杰'
-    elif last_ip_digit == '169':
-        user_name = '大杨哥'
-    elif last_ip_digit == '170':
-        user_name = '阿华'
-    elif last_ip_digit == '125':
-        user_name = '峰哥'
-    elif last_ip_digit == '123':
-        user_name = '阿莫'
-    elif last_ip_digit == '180':
-        user_name = '小刘'
-    elif last_ip_digit == '181':
-        user_name = '小黎'
-    elif last_ip_digit == '182':
-        user_name = '可欣'
     new_filename = f'{user_name}_{file.filename}'
     formatted_date = datetime.datetime.now().strftime('%y%m%d')
     folder_path = '.\\print\\'+formatted_date+'\\'+user_name+'\\'
@@ -387,7 +369,7 @@ def print_miandan():
         crop_pdf(temp_print_file_path, temp_print_file_path[:-4]+'_已裁剪.pdf', 0, 0, 0, 141)
         temp_print_file_path = temp_print_file_path[:-4]+'_已裁剪.pdf'
     temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
-    if '_已裁剪.pdf' in temp_print_file_path or get_file_type(temp_print_file_path) == '希音面单':
+    if '_已裁剪.pdf' in temp_print_file_path or get_file_type(temp_print_file_path) == '希音面单' or get_file_type(temp_print_file_path) == 'Y2面单':
         shutil.copy(temp_print_file_path, temp_print_file_path[:-4] + '_已打印.pdf')
         temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
     elif temp_print_pdf.getNumPages() > 1:
@@ -1307,6 +1289,9 @@ def get_file_type(file_path):
     elif 1.55 < page.artbox.width/page.artbox.height < 1.7:
         pdf_file.close
         return '470E'
+    elif page.artbox.width == page.artbox.height:
+        pdf_file.close
+        return 'Y2面单'
     else:
         pdf_file.close
         return '文件大小有误'
@@ -1493,13 +1478,13 @@ def get_ip_list():
             name_list.append('黎')
         elif ip == '192.168.1.14':
             name_list.append('峰')
-        elif ip == '192.168.1.15':
+        elif ip == '192.168.1.61':
             name_list.append('随')
         elif ip == '192.168.1.104':
             name_list.append('周')
         elif ip == '192.168.1.103':
             name_list.append('汪')
-        elif ip == '192.168.1.53':
+        elif ip == '192.168.1.123':
             name_list.append('刘')
         elif ip == '192.168.1.30':
             name_list.append('徐')
@@ -1516,13 +1501,13 @@ def get_ip_list():
             ban_name_list.append('黎')
         elif ip == '192.168.1.14':
             ban_name_list.append('峰')
-        elif ip == '192.168.1.15':
+        elif ip == '192.168.1.61':
             ban_name_list.append('随')
         elif ip == '192.168.1.104':
             ban_name_list.append('周')
         elif ip == '192.168.1.103':
             ban_name_list.append('汪')
-        elif ip == '192.168.1.53':
+        elif ip == '192.168.1.123':
             ban_name_list.append('刘')
         elif ip == '192.168.1.30':
             ban_name_list.append('徐')
