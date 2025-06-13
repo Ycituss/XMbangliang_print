@@ -1,0 +1,268 @@
+{
+  "build": "py38haa95532_0",
+  "build_number": 0,
+  "channel": "http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/win-64",
+  "constrains": [],
+  "depends": [
+    "joblib >=0.11",
+    "llvmlite >=0.34",
+    "numba >=0.51.2",
+    "numpy >=1.17",
+    "python >=3.8,<3.9.0a0",
+    "scikit-learn >=0.18",
+    "scipy >=1.0"
+  ],
+  "extracted_package_dir": "E:\\Anaconda\\install\\pkgs\\pynndescent-0.5.10-py38haa95532_0",
+  "features": "",
+  "files": [
+    "Lib/site-packages/pynndescent-0.5.10.dist-info/INSTALLER",
+    "Lib/site-packages/pynndescent-0.5.10.dist-info/LICENSE",
+    "Lib/site-packages/pynndescent-0.5.10.dist-info/METADATA",
+    "Lib/site-packages/pynndescent-0.5.10.dist-info/RECORD",
+    "Lib/site-packages/pynndescent-0.5.10.dist-info/REQUESTED",
+    "Lib/site-packages/pynndescent-0.5.10.dist-info/WHEEL",
+    "Lib/site-packages/pynndescent-0.5.10.dist-info/direct_url.json",
+    "Lib/site-packages/pynndescent-0.5.10.dist-info/top_level.txt",
+    "Lib/site-packages/pynndescent/__init__.py",
+    "Lib/site-packages/pynndescent/__pycache__/__init__.cpython-38.pyc",
+    "Lib/site-packages/pynndescent/__pycache__/distances.cpython-38.pyc",
+    "Lib/site-packages/pynndescent/__pycache__/graph_utils.cpython-38.pyc",
+    "Lib/site-packages/pynndescent/__pycache__/optimal_transport.cpython-38.pyc",
+    "Lib/site-packages/pynndescent/__pycache__/pynndescent_.cpython-38.pyc",
+    "Lib/site-packages/pynndescent/__pycache__/rp_trees.cpython-38.pyc",
+    "Lib/site-packages/pynndescent/__pycache__/sparse.cpython-38.pyc",
+    "Lib/site-packages/pynndescent/__pycache__/sparse_nndescent.cpython-38.pyc",
+    "Lib/site-packages/pynndescent/__pycache__/threaded_rp_trees.cpython-38.pyc",
+    "Lib/site-packages/pynndescent/__pycache__/utils.cpython-38.pyc",
+    "Lib/site-packages/pynndescent/distances.py",
+    "Lib/site-packages/pynndescent/graph_utils.py",
+    "Lib/site-packages/pynndescent/optimal_transport.py",
+    "Lib/site-packages/pynndescent/pynndescent_.py",
+    "Lib/site-packages/pynndescent/rp_trees.py",
+    "Lib/site-packages/pynndescent/sparse.py",
+    "Lib/site-packages/pynndescent/sparse_nndescent.py",
+    "Lib/site-packages/pynndescent/threaded_rp_trees.py",
+    "Lib/site-packages/pynndescent/utils.py"
+  ],
+  "fn": "pynndescent-0.5.10-py38haa95532_0.conda",
+  "legacy_bz2_md5": "a25aea76a86555579963844c3b842cac",
+  "legacy_bz2_size": 95173,
+  "license": "BSD-2-Clause",
+  "license_family": "BSD",
+  "link": {
+    "source": "E:\\Anaconda\\install\\pkgs\\pynndescent-0.5.10-py38haa95532_0",
+    "type": 1
+  },
+  "md5": "37360211d9e55d8240b81962818d5537",
+  "name": "pynndescent",
+  "package_tarball_full_path": "E:\\Anaconda\\install\\pkgs\\pynndescent-0.5.10-py38haa95532_0.conda",
+  "paths_data": {
+    "paths": [
+      {
+        "_path": "Lib/site-packages/pynndescent-0.5.10.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "sha256_in_prefix": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "size_in_bytes": 5
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent-0.5.10.dist-info/LICENSE",
+        "path_type": "hardlink",
+        "sha256": "cb65ee201c7f551adb3f80d7599391285443decf8c71f5e88d5765ee59b9079c",
+        "sha256_in_prefix": "cb65ee201c7f551adb3f80d7599391285443decf8c71f5e88d5765ee59b9079c",
+        "size_in_bytes": 1319
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent-0.5.10.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "a0c21f07e3c300f5434b54f2ae6fa2c995c4282549af803f4649ec0d9ba95f20",
+        "sha256_in_prefix": "a0c21f07e3c300f5434b54f2ae6fa2c995c4282549af803f4649ec0d9ba95f20",
+        "size_in_bytes": 7422
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent-0.5.10.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "947f228215d5fefec809ca170e65636ad3de6ed77c2d93e0ea57c8f8588a8bc7",
+        "sha256_in_prefix": "947f228215d5fefec809ca170e65636ad3de6ed77c2d93e0ea57c8f8588a8bc7",
+        "size_in_bytes": 2086
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent-0.5.10.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent-0.5.10.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "db07a93359e4e034b8785a58ad6d534ea3dca0635f1e184efe2e66e1c3a299ba",
+        "sha256_in_prefix": "db07a93359e4e034b8785a58ad6d534ea3dca0635f1e184efe2e66e1c3a299ba",
+        "size_in_bytes": 92
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent-0.5.10.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "73f9b9a4b14065708ccd49b198f5f05ca0dfd14e66e7dbecf729a7a602a50a1f",
+        "sha256_in_prefix": "73f9b9a4b14065708ccd49b198f5f05ca0dfd14e66e7dbecf729a7a602a50a1f",
+        "size_in_bytes": 91
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent-0.5.10.dist-info/top_level.txt",
+        "path_type": "hardlink",
+        "sha256": "f5676c64fb95b6d4c7a33dd2fe3bb612666340927696c15cc81db750a7f40636",
+        "sha256_in_prefix": "f5676c64fb95b6d4c7a33dd2fe3bb612666340927696c15cc81db750a7f40636",
+        "size_in_bytes": 12
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent/__init__.py",
+        "path_type": "hardlink",
+        "sha256": "3ec96fbfb6fd43243ea4900ea0dc8c51e4b3848e26759ab3365af2cf9232cbc0",
+        "sha256_in_prefix": "3ec96fbfb6fd43243ea4900ea0dc8c51e4b3848e26759ab3365af2cf9232cbc0",
+        "size_in_bytes": 615
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent/__pycache__/__init__.cpython-38.pyc",
+        "path_type": "hardlink",
+        "sha256": "70d6c2aafc9a6d29af2f062186f7d3198dfd1827213889492e14bb9acd6a1861",
+        "sha256_in_prefix": "70d6c2aafc9a6d29af2f062186f7d3198dfd1827213889492e14bb9acd6a1861",
+        "size_in_bytes": 608
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent/__pycache__/distances.cpython-38.pyc",
+        "path_type": "hardlink",
+        "sha256": "fa4a61d6f685b0da2f21881a2cc45bc594a10a98bc479452f2362c9e5a252868",
+        "sha256_in_prefix": "fa4a61d6f685b0da2f21881a2cc45bc594a10a98bc479452f2362c9e5a252868",
+        "size_in_bytes": 17978
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent/__pycache__/graph_utils.cpython-38.pyc",
+        "path_type": "hardlink",
+        "sha256": "f1fd97f6866cc027c6f3b39b3e6dcd230a095922f1f435344bd3e1495f1f7bcc",
+        "sha256_in_prefix": "f1fd97f6866cc027c6f3b39b3e6dcd230a095922f1f435344bd3e1495f1f7bcc",
+        "size_in_bytes": 5244
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent/__pycache__/optimal_transport.cpython-38.pyc",
+        "path_type": "hardlink",
+        "sha256": "f12ea0839623c458834c875461ca1e62d30f49c9c2b2e75c4d571aac798d9fc2",
+        "sha256_in_prefix": "f12ea0839623c458834c875461ca1e62d30f49c9c2b2e75c4d571aac798d9fc2",
+        "size_in_bytes": 17829
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent/__pycache__/pynndescent_.cpython-38.pyc",
+        "path_type": "hardlink",
+        "sha256": "3979e1041ab8cc5511c75ea8f8addcc4b196044b03464873116895e3ac844bc9",
+        "sha256_in_prefix": "3979e1041ab8cc5511c75ea8f8addcc4b196044b03464873116895e3ac844bc9",
+        "size_in_bytes": 50198
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent/__pycache__/rp_trees.cpython-38.pyc",
+        "path_type": "hardlink",
+        "sha256": "ae0370e670687baa983c999aa346d62a0b10d504de250b89b0ce7af0ee3c6317",
+        "sha256_in_prefix": "ae0370e670687baa983c999aa346d62a0b10d504de250b89b0ce7af0ee3c6317",
+        "size_in_bytes": 21696
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent/__pycache__/sparse.cpython-38.pyc",
+        "path_type": "hardlink",
+        "sha256": "01248d9b55c7bd0507df03787190f8b2ada925fa3997a0fdb484f64a292426b9",
+        "sha256_in_prefix": "01248d9b55c7bd0507df03787190f8b2ada925fa3997a0fdb484f64a292426b9",
+        "size_in_bytes": 20137
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent/__pycache__/sparse_nndescent.cpython-38.pyc",
+        "path_type": "hardlink",
+        "sha256": "3221041a90bf3393caa7219d3c6de837ea5e231532ab0aaa4b152b97320688aa",
+        "sha256_in_prefix": "3221041a90bf3393caa7219d3c6de837ea5e231532ab0aaa4b152b97320688aa",
+        "size_in_bytes": 6286
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent/__pycache__/threaded_rp_trees.cpython-38.pyc",
+        "path_type": "hardlink",
+        "sha256": "74a4a53c432a9aa4a6738d99c2f03c720158149c540b79729591c0c9c44c0133",
+        "sha256_in_prefix": "74a4a53c432a9aa4a6738d99c2f03c720158149c540b79729591c0c9c44c0133",
+        "size_in_bytes": 1789
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent/__pycache__/utils.cpython-38.pyc",
+        "path_type": "hardlink",
+        "sha256": "944bc3e88f019ef57c8de0ce846fb7b76dcd2e3fe112b9021cd58a839d643fbd",
+        "sha256_in_prefix": "944bc3e88f019ef57c8de0ce846fb7b76dcd2e3fe112b9021cd58a839d643fbd",
+        "size_in_bytes": 13550
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent/distances.py",
+        "path_type": "hardlink",
+        "sha256": "4977658d43d4be38c6640ab8289f4652a19291811dfaa69c2e5ab4e6a5bd7cc3",
+        "sha256_in_prefix": "4977658d43d4be38c6640ab8289f4652a19291811dfaa69c2e5ab4e6a5bd7cc3",
+        "size_in_bytes": 24602
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent/graph_utils.py",
+        "path_type": "hardlink",
+        "sha256": "793b444a7da9b68f1ae786f30619c080517e481f240747a9664f9c84a54c7f19",
+        "sha256_in_prefix": "793b444a7da9b68f1ae786f30619c080517e481f240747a9664f9c84a54c7f19",
+        "size_in_bytes": 7640
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent/optimal_transport.py",
+        "path_type": "hardlink",
+        "sha256": "320b3d7ae0eb563e60d7a62387de282960b1ab1a94b376935691bb8cc4967ed0",
+        "sha256_in_prefix": "320b3d7ae0eb563e60d7a62387de282960b1ab1a94b376935691bb8cc4967ed0",
+        "size_in_bytes": 33571
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent/pynndescent_.py",
+        "path_type": "hardlink",
+        "sha256": "1aa26fa7d961a883e56e39a1294fbb7615a6bbaee7d34c1bba3fa0ddaf21ba96",
+        "sha256_in_prefix": "1aa26fa7d961a883e56e39a1294fbb7615a6bbaee7d34c1bba3fa0ddaf21ba96",
+        "size_in_bytes": 80628
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent/rp_trees.py",
+        "path_type": "hardlink",
+        "sha256": "4f57a97c0ca9ffc42faa6e4218838f0b39456e2c92c37af8cbf48251e225db95",
+        "sha256_in_prefix": "4f57a97c0ca9ffc42faa6e4218838f0b39456e2c92c37af8cbf48251e225db95",
+        "size_in_bytes": 39731
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent/sparse.py",
+        "path_type": "hardlink",
+        "sha256": "6ff61cfd2b90bc7c940f15525e9bcaa5bf6207e9ef6e8e92bd886f5304d43374",
+        "sha256_in_prefix": "6ff61cfd2b90bc7c940f15525e9bcaa5bf6207e9ef6e8e92bd886f5304d43374",
+        "size_in_bytes": 32265
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent/sparse_nndescent.py",
+        "path_type": "hardlink",
+        "sha256": "dc227429ce3dea974d9b2e312183ca7ccaa0133be19ab6eaed75931acbf8d3b4",
+        "sha256_in_prefix": "dc227429ce3dea974d9b2e312183ca7ccaa0133be19ab6eaed75931acbf8d3b4",
+        "size_in_bytes": 10206
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent/threaded_rp_trees.py",
+        "path_type": "hardlink",
+        "sha256": "42618dc884da404098a47f8c8cc7406530609bc5fcb70ca193496cadc59a7da7",
+        "sha256_in_prefix": "42618dc884da404098a47f8c8cc7406530609bc5fcb70ca193496cadc59a7da7",
+        "size_in_bytes": 2973
+      },
+      {
+        "_path": "Lib/site-packages/pynndescent/utils.py",
+        "path_type": "hardlink",
+        "sha256": "ae05128687d5cae85e2e5ab5792e82f90d86011b310b678ed629f62f4c6862ae",
+        "sha256_in_prefix": "ae05128687d5cae85e2e5ab5792e82f90d86011b310b678ed629f62f4c6862ae",
+        "size_in_bytes": 19788
+      }
+    ],
+    "paths_version": 1
+  },
+  "requested_spec": "pynndescent",
+  "sha256": "e720ae7662b94d232552f0331453290710934b0a34335abb2c98fac25c656284",
+  "size": 98509,
+  "subdir": "win-64",
+  "timestamp": 1685342400593,
+  "track_features": "",
+  "url": "http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/win-64/pynndescent-0.5.10-py38haa95532_0.conda",
+  "version": "0.5.10"
+}

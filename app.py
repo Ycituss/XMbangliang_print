@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 import PyPDF2
 import win32api
 import shutil
+import fitz  # PyMuPDF
 from flask import Flask, render_template, jsonify, request, abort, send_file
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -799,7 +800,7 @@ def craft_miandan():
         crop_pdf(temp_print_file_path, temp_print_file_path[:-4]+'_已裁剪.pdf', 0, 0, 0, 141)
         temp_print_file_path = temp_print_file_path[:-4]+'_已裁剪.pdf'
     temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
-    if '_已裁剪.pdf' in temp_print_file_path or get_file_type(temp_print_file_path) == '希音面单':
+    if '_已裁剪.pdf' in temp_print_file_path or get_file_type(temp_print_file_path) == '希音面单' or get_file_type(temp_print_file_path) == 'Y2面单':
         shutil.copy(temp_print_file_path, temp_print_file_path[:-4] + '_带环保标.pdf')
         temp_print_file_path = temp_print_file_path[:-4] + '_带环保标.pdf'
     elif temp_print_pdf.getNumPages() > 1:
@@ -1261,6 +1262,48 @@ def output_file(trace_path, flag=0):
     print_num = 0
     return temp_num
 
+def check_pixel_in_pdf(pdf_path, page_index=0):
+    """
+    检查PDF中指定位置的像素是否为空（白色或透明）
+    位置：距离左边0.8cm，距离上边5.8cm
+    PDF尺寸：10cm x 10cm
+    """
+    # 打开PDF文件
+    doc = fitz.open(pdf_path)
+    page = doc[page_index]
+
+    # 验证PDF尺寸 (10cm x 10cm)
+    pdf_width_cm = page.rect.width * 2.54 / 72  # 点转厘米
+    pdf_height_cm = page.rect.height * 2.54 / 72
+    assert abs(pdf_width_cm - 10) < 0.1 and abs(pdf_height_cm - 10) < 0.1, "PDF尺寸不是10cm×10cm"
+
+    # 设置DPI并计算缩放因子
+    DPI = 300  # 分辨率
+    zoom = DPI / 72  # PDF默认72DPI
+    matrix = fitz.Matrix(zoom, zoom)
+
+    # 渲染为图像 (RGB格式)
+    pix = page.get_pixmap(matrix=matrix, colorspace="rgb")
+
+    # 计算目标像素坐标
+    x_cm, y_cm = 0.8, 5.8  # 目标位置（厘米）
+    x_px = int(x_cm * DPI / 2.54)
+    y_px = int(y_cm * DPI / 2.54)
+
+    # 检查坐标是否在图像范围内
+    if not (0 <= x_px < pix.width and 0 <= y_px < pix.height):
+        raise ValueError("指定位置超出PDF范围")
+
+    # 获取像素RGB值
+    pixel_rgb = pix.pixel(x_px, y_px)
+
+    # 判断是否为空（白色或透明）
+    is_white = all(c >= 250 for c in pixel_rgb)  # RGB值接近255
+    # 注意：PyMuPDF默认渲染不包含alpha通道，透明区域会渲染为白色
+
+    doc.close()
+    return is_white
+
 def get_file_type(file_path):
     verify()
     if file_path.split('.')[-1] != 'pdf':
@@ -1269,8 +1312,12 @@ def get_file_type(file_path):
     pdf_reader = PyPDF2.PdfFileReader(pdf_file)
     page = pdf_reader.getPage(0)
     if page.artbox.width == page.artbox.height > 283 and page.artbox.height < 284:
-        pdf_file.close
-        return '面单'
+        if check_pixel_in_pdf(file_path):
+            pdf_file.close
+            return 'Y2面单'
+        else:
+            pdf_file.close
+            return '面单'
     elif page.artbox.width == page.artbox.height > 282 and page.artbox.height < 283:
         pdf_file.close
         return '希音面单'
@@ -1289,9 +1336,6 @@ def get_file_type(file_path):
     elif 1.55 < page.artbox.width/page.artbox.height < 1.7:
         pdf_file.close
         return '470E'
-    elif page.artbox.width == page.artbox.height:
-        pdf_file.close
-        return 'Y2面单'
     else:
         pdf_file.close
         return '文件大小有误'
