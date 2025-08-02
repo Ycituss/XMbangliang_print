@@ -1,0 +1,442 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据查询系统</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --success-color: #2ecc71;
+            --info-color: #1abc9c;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --dark-color: #34495e;
+        }
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-bottom: 50px;
+        }
+        .header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 2.5rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .card {
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 25px;
+            border: none;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color), #1abc9c);
+            color: white;
+            border-radius: 12px 12px 0 0 !important;
+            font-weight: 600;
+            padding: 1.2rem 1.5rem;
+            font-size: 1.2rem;
+        }
+        .btn-primary {
+            background: var(--primary-color);
+            border: none;
+            padding: 10px 25px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .table-hover tbody tr:hover {
+            background-color: rgba(52, 152, 219, 0.08);
+            transform: scale(1.008);
+            transition: transform 0.2s;
+        }
+        .barcode-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: inline-block;
+        }
+        .filter-section {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .operator-badge {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            text-align: center;
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .page-count {
+            display: inline-flex;
+            align-items: center;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        .stats-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        .stats-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        .stats-label {
+            font-size: 1rem;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .barcode-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .type-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            margin-right: 8px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部标题 -->
+    <div class="header text-center">
+        <div class="container">
+            <h1 class="display-4"><i class="bi bi-database-check"></i> 数据查询系统</h1>
+            <p class="lead">按时间和操作人查询记录</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- 统计卡片 -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <i class="bi bi-file-earmark-text text-primary" style="font-size: 2rem;"></i>
+                    <div class="stats-value" id="totalFiles">0</div>
+                    <div class="stats-label">总文件数</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <i class="bi bi-people text-success" style="font-size: 2rem;"></i>
+                    <div class="stats-value" id="totalOperators">0</div>
+                    <div class="stats-label">操作人数</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <i class="bi bi-list-check text-info" style="font-size: 2rem;"></i>
+                    <div class="stats-value" id="totalPages">0</div>
+                    <div class="stats-label">总页数</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <i class="bi bi-tags text-warning" style="font-size: 2rem;"></i>
+                    <div class="stats-value" id="totalTypes">8</div>
+                    <div class="stats-label">条码类型</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 查询面板 -->
+        <div class="card filter-section">
+            <div class="card-body">
+                <h5 class="card-title mb-4"><i class="bi bi-funnel"></i> 查询条件</h5>
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">开始日期</label>
+                        <input type="date" class="form-control form-control-lg" id="startDate" value="{{ start_date }}">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">结束日期</label>
+                        <input type="date" class="form-control form-control-lg" id="endDate" value="{{ end_date }}">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">操作人</label>
+                        <select class="form-select form-select-lg" id="operator">
+                            <option value="">全部操作人</option>
+                            {% for op in operators %}
+                            <option value="{{ op['operator'] }}">{{ op['operator'] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="button" class="btn btn-primary btn-lg w-100" onclick="executeQuery()">
+                            <i class="bi bi-search me-2"></i> 查询
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 条码类型图例 -->
+                <div class="mt-4">
+                    <h6 class="fw-bold mb-3"><i class="bi bi-tag"></i> 条码类型图例</h6>
+                    <div class="barcode-legend">
+                        <div class="d-flex align-items-center">
+                            <span class="type-color bg-primary"></span>
+                            <span>面单</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="type-color bg-success"></span>
+                            <span>Y2面单</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="type-color bg-info"></span>
+                            <span>希音面单</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="type-color bg-warning"></span>
+                            <span>TK面单</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="type-color bg-danger"></span>
+                            <span>顺丰小包面单</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="type-color bg-secondary"></span>
+                            <span>条码_带环保标</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="type-color bg-dark"></span>
+                            <span>条码</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="type-color" style="background-color: #9b59b6;"></span>
+                            <span>TK条码</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 结果展示 -->
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-table me-2"></i> 查询结果</span>
+                <span class="badge bg-info py-2 px-3" id="resultCount">0 条记录</span>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>UID</th>
+                                <th>时间</th>
+                                <th>操作人</th>
+                                <th>文件名</th>
+                                <th>条码类型</th>
+                                <th>页数</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultBody">
+                            <tr>
+                                <td colspan="6" class="text-center py-5">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">加载中...</span>
+                                    </div>
+                                    <p class="mt-3">正在加载数据...</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center">
+        <div class="container">
+            <p class="mb-0">数据查询系统 &copy; 2023 | 总记录数: <span id="totalRecords">0</span></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 条码类型颜色映射
+        const barcodeColors = {
+            "面单": "bg-primary",
+            "Y2面单": "bg-success",
+            "希音面单": "bg-info",
+            "TK面单": "bg-warning text-dark",
+            "顺丰小包面单": "bg-danger",
+            "条码_带环保标": "bg-secondary",
+            "条码": "bg-dark",
+            "TK条码": "bg-purple"
+        };
+        
+        // 执行查询
+        function executeQuery() {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            const operator = document.getElementById('operator').value;
+            
+            // 显示加载状态
+            const tbody = document.getElementById('resultBody');
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="text-center py-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">加载中...</span>
+                        </div>
+                        <p class="mt-3">正在查询数据...</p>
+                    </td>
+                </tr>
+            `;
+            
+            // 发送查询请求
+            fetch('/query', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    start_date: startDate,
+                    end_date: endDate,
+                    operator: operator
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                displayResults(data);
+                updateStats(data);
+            })
+            .catch(error => {
+                console.error('查询失败:', error);
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="text-center text-danger py-5">
+                            <i class="bi bi-exclamation-circle fs-1"></i>
+                            <p class="mt-3">查询失败，请重试</p>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+        
+        // 显示结果
+        function displayResults(data) {
+            const tbody = document.getElementById('resultBody');
+            const countSpan = document.getElementById('resultCount');
+            
+            // 清空现有结果
+            tbody.innerHTML = '';
+            countSpan.textContent = `${data.length} 条记录`;
+            
+            if (data.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-5">
+                            <i class="bi bi-database-exclamation fs-1"></i>
+                            <p class="mt-3">未找到匹配记录</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            // 填充新结果
+            data.forEach(record => {
+                const row = document.createElement('tr');
+                
+                // 格式化时间
+                const timestamp = new Date(record.timestamp);
+                const formattedTime = `${timestamp.toLocaleDateString()} ${timestamp.toLocaleTimeString()}`;
+                
+                row.innerHTML = `
+                    <td><span class="badge bg-light text-dark">${record.uid}</span></td>
+                    <td>${formattedTime}</td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <span class="operator-badge">${record.operator.charAt(0)}</span>
+                            <span>${record.operator}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <i class="bi bi-file-earmark-pdf text-danger me-2"></i>
+                        ${record.filename}
+                    </td>
+                    <td>
+                        <span class="barcode-badge ${barcodeColors[record.barcode_type] || 'bg-dark'}">
+                            ${record.barcode_type}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="page-count">
+                            <span>${record.page_count}</span>
+                            <i class="bi bi-file-earmark-text ms-2 text-primary"></i>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        // 更新统计信息
+        function updateStats(data) {
+            // 计算总页数
+            const totalPages = data.reduce((sum, record) => sum + record.page_count, 0);
+            
+            // 计算不同操作人数量
+            const operators = new Set(data.map(record => record.operator));
+            
+            // 更新统计卡片
+            document.getElementById('totalFiles').textContent = data.length;
+            document.getElementById('totalOperators').textContent = operators.size;
+            document.getElementById('totalPages').textContent = totalPages;
+            document.getElementById('totalRecords').textContent = data.length;
+        }
+        
+        // 页面加载时执行初始查询
+        document.addEventListener('DOMContentLoaded', function() {
+            executeQuery();
+        });
+    </script>
+</body>
+</html>
