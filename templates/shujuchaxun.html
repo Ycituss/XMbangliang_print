@@ -1,4 +1,3 @@
-<!-- templates/index.html -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -7,6 +6,8 @@
     <title>数据查询系统</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- 引入Chart.js库 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --primary-color: #3498db;
@@ -142,6 +143,52 @@
             margin-right: 8px;
             display: inline-block;
         }
+        
+        /* 新增图表容器样式 */
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin-top: 20px;
+        }
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .chart-controls {
+            display: flex;
+            gap: 10px;
+        }
+        .chart-controls button {
+            background: rgba(52, 152, 219, 0.1);
+            border: 1px solid rgba(52, 152, 219, 0.3);
+            border-radius: 6px;
+            padding: 4px 12px;
+            font-size: 0.85rem;
+            color: #3498db;
+            transition: all 0.3s;
+        }
+        .chart-controls button:hover {
+            background: rgba(52, 152, 219, 0.2);
+        }
+        .chart-controls button.active {
+            background: #3498db;
+            color: white;
+        }
+        .no-data-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #6c757d;
+        }
+        .no-data-placeholder i {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            opacity: 0.3;
+        }
     </style>
 </head>
 <body>
@@ -256,6 +303,27 @@
             </div>
         </div>
 
+        <!-- 新增：操作人维度柱状图 -->
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-bar-chart-line me-2"></i> 操作人维度统计</span>
+                <div class="chart-controls">
+                    <button id="chartTypeBtn" class="active" onclick="toggleChartType()">分组柱状图</button>
+                    <button id="sortTypeBtn" class="active" onclick="toggleSortType()">按数量排序</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="operatorChart"></canvas>
+                    <div id="noChartData" class="no-data-placeholder" style="display: none;">
+                        <i class="bi bi-bar-chart"></i>
+                        <h5>无图表数据</h5>
+                        <p class="text-muted">请执行查询以加载图表数据</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- 结果展示 -->
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -311,6 +379,11 @@
             "TK条码": "bg-purple"
         };
         
+        // 图表相关变量
+        let barChart = null;
+        let chartType = 'grouped'; // 'grouped' 或 'stacked'
+        let sortType = 'count';    // 'count' 或 'name'
+        
         // 执行查询
         function executeQuery() {
             const startDate = document.getElementById('startDate').value;
@@ -346,6 +419,7 @@
             .then(data => {
                 displayResults(data);
                 updateStats(data);
+                prepareChartData(data);
             })
             .catch(error => {
                 console.error('查询失败:', error);
@@ -357,6 +431,12 @@
                         </td>
                     </tr>
                 `;
+                // 销毁已有图表
+                if (barChart) {
+                    barChart.destroy();
+                    barChart = null;
+                }
+                document.getElementById('noChartData').style.display = 'flex';
             });
         }
         
@@ -431,6 +511,214 @@
             document.getElementById('totalOperators').textContent = operators.size;
             document.getElementById('totalPages').textContent = totalPages;
             document.getElementById('totalRecords').textContent = data.length;
+        }
+        
+        // 准备图表数据
+        function prepareChartData(data) {
+            // 收集所有操作人和条码类型
+            const operators = new Set();
+            const barcodeTypes = new Set();
+            
+            // 遍历数据，收集操作人和条码类型
+            data.forEach(record => {
+                operators.add(record.operator);
+                barcodeTypes.add(record.barcode_type);
+            });
+            
+            // 创建操作人列表并排序
+            let operatorList = Array.from(operators);
+            
+            // 按名称排序或按数量排序
+            if (sortType === 'count') {
+                // 计算每个操作人的总数量
+                const operatorCounts = {};
+                operatorList.forEach(op => {
+                    operatorCounts[op] = data.filter(r => r.operator === op).length;
+                });
+                
+                // 按数量从高到低排序
+                operatorList.sort((a, b) => operatorCounts[b] - operatorCounts[a]);
+            } else {
+                operatorList.sort();
+            }
+            
+            // 创建条码类型列表并排序
+            const barcodeTypeList = Array.from(barcodeTypes).sort();
+            
+            // 创建数据集
+            const datasets = [];
+            const colorMap = {
+                "面单": "#3498db",
+                "Y2面单": "#2ecc71",
+                "希音面单": "#1abc9c",
+                "TK面单": "#f39c12",
+                "顺丰小包面单": "#e74c3c",
+                "条码_带环保标": "#6c757d",
+                "条码": "#34495e",
+                "TK条码": "#9b59b6"
+            };
+            
+            // 为每个条码类型创建一个数据集
+            barcodeTypeList.forEach(type => {
+                const dataPoints = [];
+                
+                // 为每个操作人统计该类型的数量
+                operatorList.forEach(operator => {
+                    const count = data.filter(record => 
+                        record.operator === operator && record.barcode_type === type
+                    ).length;
+                    dataPoints.push(count);
+                });
+                
+                datasets.push({
+                    label: type,
+                    data: dataPoints,
+                    backgroundColor: colorMap[type] || "#000000",
+                    borderColor: colorMap[type] || "#000000",
+                    borderWidth: 1,
+                    barPercentage: 0.8,
+                    categoryPercentage: 0.8
+                });
+            });
+            
+            // 创建图表数据对象
+            const chartData = {
+                labels: operatorList,
+                datasets: datasets
+            };
+            
+            // 创建或更新图表
+            createBarChart(chartData);
+        }
+        
+        // 创建柱状图
+        function createBarChart(chartData) {
+            const ctx = document.getElementById('operatorChart').getContext('2d');
+            
+            // 如果已有图表，销毁它
+            if (barChart) {
+                barChart.destroy();
+            }
+            
+            // 检查是否有数据
+            if (chartData.labels.length === 0 || chartData.datasets.length === 0) {
+                document.getElementById('noChartData').style.display = 'flex';
+                return;
+            } else {
+                document.getElementById('noChartData').style.display = 'none';
+            }
+            
+            // 创建新的图表
+            barChart = new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    indexAxis: 'x',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                boxWidth: 12,
+                                padding: 15,
+                                font: {
+                                    size: 12
+                                },
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.dataset.label || '';
+                                    const value = context.raw || 0;
+                                    return `${label}: ${value} 个`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                text: '操作人',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '条码数量',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                }
+                            },
+                            ticks: {
+                                precision: 0
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeOutQuart'
+                    }
+                }
+            });
+            
+            // 根据选择的图表类型设置分组方式
+            setChartGrouping();
+        }
+        
+        // 设置图表分组方式
+        function setChartGrouping() {
+            if (barChart) {
+                barChart.config.options.scales.x.stacked = (chartType === 'stacked');
+                barChart.config.options.scales.y.stacked = (chartType === 'stacked');
+                
+                // 设置数据集堆叠方式
+                barChart.data.datasets.forEach(dataset => {
+                    dataset.stack = (chartType === 'stacked') ? 'stack' : undefined;
+                });
+                
+                barChart.update();
+            }
+        }
+        
+        // 切换图表类型（分组/堆叠）
+        function toggleChartType() {
+            const btn = document.getElementById('chartTypeBtn');
+            if (chartType === 'grouped') {
+                chartType = 'stacked';
+                btn.textContent = '堆叠柱状图';
+            } else {
+                chartType = 'grouped';
+                btn.textContent = '分组柱状图';
+            }
+            setChartGrouping();
+        }
+        
+        // 切换排序方式（名称/数量）
+        function toggleSortType() {
+            const btn = document.getElementById('sortTypeBtn');
+            if (sortType === 'name') {
+                sortType = 'count';
+                btn.textContent = '按数量排序';
+            } else {
+                sortType = 'name';
+                btn.textContent = '按名称排序';
+            }
+            executeQuery();
         }
         
         // 页面加载时执行初始查询
