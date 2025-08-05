@@ -261,7 +261,7 @@
                         </button>
                     </div>
                 </div>
-                
+
                 <!-- 条码类型图例 -->
                 <div class="mt-4">
                     <h6 class="fw-bold mb-3"><i class="bi bi-tag"></i> 条码类型图例</h6>
@@ -303,10 +303,10 @@
             </div>
         </div>
 
-        <!-- 新增：操作人维度柱状图 -->
+        <!-- 操作人维度统计（条码数量） -->
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <span><i class="bi bi-bar-chart-line me-2"></i> 操作人维度统计</span>
+                <span><i class="bi bi-bar-chart-line me-2"></i> 操作人维度统计 (条码数量)</span>
                 <div class="chart-controls">
                     <button id="chartTypeBtn" class="active" onclick="toggleChartType()">分组柱状图</button>
                     <button id="sortTypeBtn" class="active" onclick="toggleSortType()">按数量排序</button>
@@ -316,6 +316,27 @@
                 <div class="chart-container">
                     <canvas id="operatorChart"></canvas>
                     <div id="noChartData" class="no-data-placeholder" style="display: none;">
+                        <i class="bi bi-bar-chart"></i>
+                        <h5>无图表数据</h5>
+                        <p class="text-muted">请执行查询以加载图表数据</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新增：操作人维度统计（总页数） -->
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-bar-chart-line me-2"></i> 操作人维度统计 (总页数)</span>
+                <div class="chart-controls">
+                    <button id="pageChartTypeBtn" class="active" onclick="togglePageChartType()">分组柱状图</button>
+                    <button id="pageSortTypeBtn" class="active" onclick="togglePageSortType()">按页数排序</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="operatorPageChart"></canvas>
+                    <div id="noPageChartData" class="no-data-placeholder" style="display: none;">
                         <i class="bi bi-bar-chart"></i>
                         <h5>无图表数据</h5>
                         <p class="text-muted">请执行查询以加载图表数据</p>
@@ -378,18 +399,23 @@
             "条码": "bg-dark",
             "TK条码": "bg-purple"
         };
-        
+
         // 图表相关变量
         let barChart = null;
         let chartType = 'grouped'; // 'grouped' 或 'stacked'
         let sortType = 'count';    // 'count' 或 'name'
-        
+
+        // 总页数图表相关变量
+        let barPageChart = null;
+        let pageChartType = 'grouped'; // 'grouped' 或 'stacked'
+        let pageSortType = 'count';    // 'count' 或 'name'
+
         // 执行查询
         function executeQuery() {
             const startDate = document.getElementById('startDate').value;
             const endDate = document.getElementById('endDate').value;
             const operator = document.getElementById('operator').value;
-            
+
             // 显示加载状态
             const tbody = document.getElementById('resultBody');
             tbody.innerHTML = `
@@ -402,7 +428,7 @@
                     </td>
                 </tr>
             `;
-            
+
             // 发送查询请求
             fetch('/query', {
                 method: 'POST',
@@ -420,6 +446,7 @@
                 displayResults(data);
                 updateStats(data);
                 prepareChartData(data);
+                preparePageChartData(data); // 准备总页数图表数据
             })
             .catch(error => {
                 console.error('查询失败:', error);
@@ -436,19 +463,24 @@
                     barChart.destroy();
                     barChart = null;
                 }
+                if (barPageChart) {
+                    barPageChart.destroy();
+                    barPageChart = null;
+                }
                 document.getElementById('noChartData').style.display = 'flex';
+                document.getElementById('noPageChartData').style.display = 'flex';
             });
         }
-        
+
         // 显示结果
         function displayResults(data) {
             const tbody = document.getElementById('resultBody');
             const countSpan = document.getElementById('resultCount');
-            
+
             // 清空现有结果
             tbody.innerHTML = '';
             countSpan.textContent = `${data.length} 条记录`;
-            
+
             if (data.length === 0) {
                 tbody.innerHTML = `
                     <tr>
@@ -460,15 +492,15 @@
                 `;
                 return;
             }
-            
+
             // 填充新结果
             data.forEach(record => {
                 const row = document.createElement('tr');
-                
+
                 // 格式化时间
                 const timestamp = new Date(record.timestamp);
                 const formattedTime = `${timestamp.toLocaleDateString()} ${timestamp.toLocaleTimeString()}`;
-                
+
                 row.innerHTML = `
                     <td><span class="badge bg-light text-dark">${record.uid}</span></td>
                     <td>${formattedTime}</td>
@@ -497,37 +529,37 @@
                 tbody.appendChild(row);
             });
         }
-        
+
         // 更新统计信息
         function updateStats(data) {
             // 计算总页数
             const totalPages = data.reduce((sum, record) => sum + record.page_count, 0);
-            
+
             // 计算不同操作人数量
             const operators = new Set(data.map(record => record.operator));
-            
+
             // 更新统计卡片
             document.getElementById('totalFiles').textContent = data.length;
             document.getElementById('totalOperators').textContent = operators.size;
             document.getElementById('totalPages').textContent = totalPages;
             document.getElementById('totalRecords').textContent = data.length;
         }
-        
-        // 准备图表数据
+
+        // 准备图表数据（条码数量）
         function prepareChartData(data) {
             // 收集所有操作人和条码类型
             const operators = new Set();
             const barcodeTypes = new Set();
-            
+
             // 遍历数据，收集操作人和条码类型
             data.forEach(record => {
                 operators.add(record.operator);
                 barcodeTypes.add(record.barcode_type);
             });
-            
+
             // 创建操作人列表并排序
             let operatorList = Array.from(operators);
-            
+
             // 按名称排序或按数量排序
             if (sortType === 'count') {
                 // 计算每个操作人的总数量
@@ -535,16 +567,16 @@
                 operatorList.forEach(op => {
                     operatorCounts[op] = data.filter(r => r.operator === op).length;
                 });
-                
+
                 // 按数量从高到低排序
                 operatorList.sort((a, b) => operatorCounts[b] - operatorCounts[a]);
             } else {
                 operatorList.sort();
             }
-            
+
             // 创建条码类型列表并排序
             const barcodeTypeList = Array.from(barcodeTypes).sort();
-            
+
             // 创建数据集
             const datasets = [];
             const colorMap = {
@@ -557,19 +589,19 @@
                 "条码": "#34495e",
                 "TK条码": "#9b59b6"
             };
-            
+
             // 为每个条码类型创建一个数据集
             barcodeTypeList.forEach(type => {
                 const dataPoints = [];
-                
+
                 // 为每个操作人统计该类型的数量
                 operatorList.forEach(operator => {
-                    const count = data.filter(record => 
+                    const count = data.filter(record =>
                         record.operator === operator && record.barcode_type === type
                     ).length;
                     dataPoints.push(count);
                 });
-                
+
                 datasets.push({
                     label: type,
                     data: dataPoints,
@@ -580,26 +612,106 @@
                     categoryPercentage: 0.8
                 });
             });
-            
+
             // 创建图表数据对象
             const chartData = {
                 labels: operatorList,
                 datasets: datasets
             };
-            
+
             // 创建或更新图表
             createBarChart(chartData);
         }
-        
-        // 创建柱状图
+
+        // 准备图表数据（总页数）
+        function preparePageChartData(data) {
+            // 收集所有操作人和条码类型
+            const operators = new Set();
+            const barcodeTypes = new Set();
+
+            // 遍历数据，收集操作人和条码类型
+            data.forEach(record => {
+                operators.add(record.operator);
+                barcodeTypes.add(record.barcode_type);
+            });
+
+            // 创建操作人列表并排序
+            let operatorList = Array.from(operators);
+
+            // 按名称排序或按页数排序
+            if (pageSortType === 'count') {
+                // 计算每个操作人的总页数
+                const operatorPageCounts = {};
+                operatorList.forEach(op => {
+                    operatorPageCounts[op] = data
+                        .filter(r => r.operator === op)
+                        .reduce((sum, record) => sum + record.page_count, 0);
+                });
+
+                // 按页数从高到低排序
+                operatorList.sort((a, b) => operatorPageCounts[b] - operatorPageCounts[a]);
+            } else {
+                operatorList.sort();
+            }
+
+            // 创建条码类型列表并排序
+            const barcodeTypeList = Array.from(barcodeTypes).sort();
+
+            // 创建数据集
+            const datasets = [];
+            const colorMap = {
+                "面单": "#3498db",
+                "Y2面单": "#2ecc71",
+                "希音面单": "#1abc9c",
+                "TK面单": "#f39c12",
+                "顺丰小包面单": "#e74c3c",
+                "条码_带环保标": "#6c757d",
+                "条码": "#34495e",
+                "TK条码": "#9b59b6"
+            };
+
+            // 为每个条码类型创建一个数据集
+            barcodeTypeList.forEach(type => {
+                const dataPoints = [];
+
+                // 为每个操作人统计该类型的总页数
+                operatorList.forEach(operator => {
+                    const totalPages = data
+                        .filter(record => record.operator === operator && record.barcode_type === type)
+                        .reduce((sum, record) => sum + record.page_count, 0);
+                    dataPoints.push(totalPages);
+                });
+
+                datasets.push({
+                    label: type,
+                    data: dataPoints,
+                    backgroundColor: colorMap[type] || "#000000",
+                    borderColor: colorMap[type] || "#000000",
+                    borderWidth: 1,
+                    barPercentage: 0.8,
+                    categoryPercentage: 0.8
+                });
+            });
+
+            // 创建图表数据对象
+            const chartData = {
+                labels: operatorList,
+                datasets: datasets
+            };
+
+            // 创建或更新图表
+            createPageBarChart(chartData);
+        }
+
+        // 创建条码数量柱状图
         function createBarChart(chartData) {
             const ctx = document.getElementById('operatorChart').getContext('2d');
-            
+
             // 如果已有图表，销毁它
             if (barChart) {
                 barChart.destroy();
             }
-            
+
             // 检查是否有数据
             if (chartData.labels.length === 0 || chartData.datasets.length === 0) {
                 document.getElementById('noChartData').style.display = 'flex';
@@ -607,7 +719,7 @@
             } else {
                 document.getElementById('noChartData').style.display = 'none';
             }
-            
+
             // 创建新的图表
             barChart = new Chart(ctx, {
                 type: 'bar',
@@ -675,27 +787,131 @@
                     }
                 }
             });
-            
+
             // 根据选择的图表类型设置分组方式
             setChartGrouping();
         }
-        
-        // 设置图表分组方式
+
+        // 创建总页数柱状图
+        function createPageBarChart(chartData) {
+            const ctx = document.getElementById('operatorPageChart').getContext('2d');
+
+            // 如果已有图表，销毁它
+            if (barPageChart) {
+                barPageChart.destroy();
+            }
+
+            // 检查是否有数据
+            if (chartData.labels.length === 0 || chartData.datasets.length === 0) {
+                document.getElementById('noPageChartData').style.display = 'flex';
+                return;
+            } else {
+                document.getElementById('noPageChartData').style.display = 'none';
+            }
+
+            // 创建新的图表
+            barPageChart = new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    indexAxis: 'x',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                boxWidth: 12,
+                                padding: 15,
+                                font: {
+                                    size: 12
+                                },
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.dataset.label || '';
+                                    const value = context.raw || 0;
+                                    return `${label}: ${value} 页`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                text: '操作人',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '总页数',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                }
+                            },
+                            ticks: {
+                                precision: 0
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeOutQuart'
+                    }
+                }
+            });
+
+            // 根据选择的图表类型设置分组方式
+            setPageChartGrouping();
+        }
+
+        // 设置图表分组方式（条码数量）
         function setChartGrouping() {
             if (barChart) {
                 barChart.config.options.scales.x.stacked = (chartType === 'stacked');
                 barChart.config.options.scales.y.stacked = (chartType === 'stacked');
-                
+
                 // 设置数据集堆叠方式
                 barChart.data.datasets.forEach(dataset => {
                     dataset.stack = (chartType === 'stacked') ? 'stack' : undefined;
                 });
-                
+
                 barChart.update();
             }
         }
-        
-        // 切换图表类型（分组/堆叠）
+
+        // 设置图表分组方式（总页数）
+        function setPageChartGrouping() {
+            if (barPageChart) {
+                barPageChart.config.options.scales.x.stacked = (pageChartType === 'stacked');
+                barPageChart.config.options.scales.y.stacked = (pageChartType === 'stacked');
+
+                // 设置数据集堆叠方式
+                barPageChart.data.datasets.forEach(dataset => {
+                    dataset.stack = (pageChartType === 'stacked') ? 'stack' : undefined;
+                });
+
+                barPageChart.update();
+            }
+        }
+
+        // 切换图表类型（分组/堆叠） - 条码数量
         function toggleChartType() {
             const btn = document.getElementById('chartTypeBtn');
             if (chartType === 'grouped') {
@@ -707,8 +923,8 @@
             }
             setChartGrouping();
         }
-        
-        // 切换排序方式（名称/数量）
+
+        // 切换排序方式（名称/数量） - 条码数量
         function toggleSortType() {
             const btn = document.getElementById('sortTypeBtn');
             if (sortType === 'name') {
@@ -720,9 +936,42 @@
             }
             executeQuery();
         }
-        
+
+        // 切换图表类型（分组/堆叠） - 总页数
+        function togglePageChartType() {
+            const btn = document.getElementById('pageChartTypeBtn');
+            if (pageChartType === 'grouped') {
+                pageChartType = 'stacked';
+                btn.textContent = '堆叠柱状图';
+            } else {
+                pageChartType = 'grouped';
+                btn.textContent = '分组柱状图';
+            }
+            setPageChartGrouping();
+        }
+
+        // 切换排序方式（名称/页数） - 总页数
+        function togglePageSortType() {
+            const btn = document.getElementById('pageSortTypeBtn');
+            if (pageSortType === 'name') {
+                pageSortType = 'count';
+                btn.textContent = '按页数排序';
+            } else {
+                pageSortType = 'name';
+                btn.textContent = '按名称排序';
+            }
+            executeQuery();
+        }
+
         // 页面加载时执行初始查询
         document.addEventListener('DOMContentLoaded', function() {
+            // 设置默认日期为当前日期
+            const today = new Date();
+            const formattedToday = today.toISOString().split('T')[0];
+
+            document.getElementById('startDate').value = formattedToday;
+            document.getElementById('endDate').value = formattedToday;
+
             executeQuery();
         });
     </script>
