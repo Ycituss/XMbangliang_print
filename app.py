@@ -1805,15 +1805,13 @@ def get_name_by_ip(client_ip):
         name = '纪'
     elif client_ip == '192.168.1.22':
         name = '峰'
-    elif client_ip == '192.168.1.61':
+    elif client_ip == '192.168.1.36':
         name = '随'
-    elif client_ip == '192.168.1.104':
-        name = '周'
-    elif client_ip == '192.168.1.103':
+    elif client_ip == '192.168.1.45':
         name = '汪'
-    elif client_ip == '192.168.1.123':
-        name = '刘'
-    elif client_ip == '192.168.1.30':
+    elif client_ip == '192.168.1.22':
+        name = '存'
+    elif client_ip == '192.168.1.242':
         name = '徐'
     elif client_ip == '192.168.1.88':
         name = '万欣'
