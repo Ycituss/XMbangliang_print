@@ -1809,7 +1809,7 @@ def get_name_by_ip(client_ip):
         name = '随'
     elif client_ip == '192.168.1.45':
         name = '汪'
-    elif client_ip == '192.168.1.22':
+    elif client_ip == '192.168.1.66':
         name = '存'
     elif client_ip == '192.168.1.242':
         name = '徐'
