@@ -12,6 +12,7 @@ import fitz  # PyMuPDF
 from flask import Flask, render_template, jsonify, request, abort, send_file
 from apscheduler.schedulers.background import BackgroundScheduler
 import sqlite3
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -23,7 +24,7 @@ CLEAR_INTERVAL = 30
 blocked_ips = {}
 
 # 版本
-version = "V2.3.0"
+version = "V2.4.0"
 
 print_num = 1
 miandan_Separator = ".\\file\\面单_外箱单.pdf"
@@ -69,12 +70,20 @@ trace_KDCORN2 = ".\\file\\KDCORN2.pdf"
 file_path = ".\\file\\test.pdf"
 temp_output_path = ".\\file\\output.pdf"
 temp_print_file_path = ".\\print\\test.pdf"
+send_qyweixin_file_path = ".\\print\\test.pdf"
 
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
+@app.route('/send_qyweixin1')
+def send_qyweixin1():
+    return render_template('send_qyweixin1.html')
+
+@app.route('/send_qyweixin2')
+def send_qyweixin2():
+    return render_template('send_qyweixin2.html')
 
 @app.route('/zhuizong')
 def zhuizong():
@@ -122,6 +131,37 @@ def get_version():
     global version
     return version
 
+@app.route('/upload_send_qyweixin1', methods=['POST'])
+def upload_send_qyweixin1():
+    verify()
+    global send_qyweixin_file_path
+    file = request.files['file']
+    new_filename = f'{file.filename}'
+    formatted_date = datetime.datetime.now().strftime('%y%m%d')
+    folder_path = '.\\print\\' + formatted_date + '\\'
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+    file.save(os.path.join(folder_path, new_filename))
+    send_qyweixin_file_path = folder_path + new_filename
+    url = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=a76008a6-3b34-4b81-9fd4-be6c059a61f7'
+    send_qyweixin(url, send_qyweixin_file_path)
+    return new_filename + ',' + get_file_type(folder_path + new_filename)
+
+@app.route('/upload_send_qyweixin2', methods=['POST'])
+def upload_send_qyweixin2():
+    verify()
+    global send_qyweixin_file_path
+    file = request.files['file']
+    new_filename = f'{file.filename}'
+    formatted_date = datetime.datetime.now().strftime('%y%m%d')
+    folder_path = '.\\print\\' + formatted_date + '\\'
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+    file.save(os.path.join(folder_path, new_filename))
+    send_qyweixin_file_path = folder_path + new_filename
+    url = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=9506fb18-3063-4b53-ad76-f09656fee4f4'
+    send_qyweixin(url, send_qyweixin_file_path)
+    return new_filename + ',' + get_file_type(folder_path + new_filename)
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -1938,6 +1978,41 @@ def query():
     database = [dict(row) for row in results]
 
     return jsonify(database)
+
+def excel_to_markdown_table(file_path):
+	# 读取Excel文件的第一个工作表
+	df = pd.read_excel(file_path, sheet_name=0)
+
+	# 提取第一列数据并统计每个值的出现次数
+	value_counts = df.iloc[:, 0].value_counts()
+
+	# 转换为字典并按计数排序（从高到低）
+	sorted_dict = value_counts.sort_values(ascending=False).to_dict()
+
+	# 生成Markdown表格
+	markdown_table = "| 店铺 | 需操作订单数 |\n"
+	markdown_table += "|------|----------|\n"
+
+	for content, count in sorted_dict.items():
+		# 处理可能包含特殊字符的内容
+		content_str = str(content)
+		markdown_table += f"| {content_str} | {count} |\n"
+
+	return markdown_table
+
+def send_qyweixin(url, file_path):
+	markdown_output = excel_to_markdown_table(file_path)
+
+
+	data = {
+			"msgtype": "markdown_v2",
+			"markdown_v2": {
+				"content": markdown_output
+			}
+	   }
+	header = {'Content-Type': 'application/json'}
+
+	response = requests.post(url, json=data, headers=header)
 
 
 if __name__ == '__main__':

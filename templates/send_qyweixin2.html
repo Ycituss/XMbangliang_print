@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fi">
+<meta charset="utf-8">
+<head>
+<title>企业微信2</title>
+
+</head>
+<body>
+
+	<div class="div_wrapper">
+		<h2>企业微信2</h2>
+
+		<div style="display:block; margin-top: 0.5em;">
+		文件类型:
+
+		<form action = "" method = "get" style="display: inline; width: auto;">
+			<select name="filename" onchange="window.location=this.value">
+					<option value="send_qyweixin1">企业微信1</option>
+					<option value="send_qyweixin2" selected="selected">企业微信2</option>
+			</select>
+		</form>
+		</div>
+
+		<div class="div_mc_ver">
+			<h3 class="h_mc_ver">
+				<li style="width: 200px; height: 50px;" id="bu22">
+					<a aria-label="Okra">
+						<span data-translate="Okra">
+							打开文件
+							<input type="file" id="fileInput" style="opacity:0;width:200px;height:50px;cursor:pointer;">
+						</span>
+					</a>
+				</li>
+			</h3>
+		</div>
+
+	</div> <!-- wrapper -->
+
+</body>
+
+<script>
+			function add_new_EventListener() {
+				const fileInput = document.getElementById('fileInput');
+				fileInput.addEventListener('input', async function () {
+				if (fileInput.files.length > 0) {
+					const response = await uploadFile();
+				}
+				});
+
+				async function uploadFile() {
+				const file = fileInput.files[0];
+				if (!file) {
+					return '请选择文件';
+				}
+				const formData = new FormData();
+				formData.append('file', file);
+				const response = await fetch('/upload_send_qyweixin2', {
+					method: 'POST',
+					body: formData
+				});
+				return await response.text();
+				}
+			}
+			add_new_EventListener();
+		 </script>
+
+
+<style type="text/css">
+	* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background-color	: #262626;
+	color				: #d0d0d0;
+	font-family			: Verdana;
+}
+
+h2, h3 {
+	color		: #bbb;
+	padding		: 0;
+}
+
+a, a:hover, a:active, a:visited {
+	color			: #99f;
+	text-decoration	: none;
+}
+
+a:hover {
+	color			: #ccf;
+	text-decoration	: underline;
+}
+
+/*
+a, td a, a:hover, td a:hover, a:visited, td a:visited {
+	color: inherit;
+	text-decoration: underline;
+}
+*/
+
+.div_wrapper {
+	border			: none;
+	flex-direction	: column;
+	display			: flex;
+	margin			: 0 auto;
+	min-width		: 60em;
+	padding			: 20px 10px;
+	text-align		: center;
+	width			: 50%;
+}
+
+.div_mc_ver {
+	align-items			: center;
+	background-color	: #333;
+	border-radius		: 1em;
+	display				: flex;
+	flex-direction		: column;
+	margin				: 1em;
+	padding				: 1em;
+}
+
+.tr_header {
+	font-size	: 16px;
+	font-weight	: bold;
+}
+
+.tr_mod_entry_even {
+	background-color	: #404040;
+}
+
+.tr_mod_entry_odd {
+	background-color	: #505050;
+}
+
+table {
+    margin-top	: 0.5em;
+    text-align	: initial;
+}
+
+td {
+	padding		: 0px 8px;
+}
+
+td a {
+	color		: #99f;
+	text-decoration	: none;
+}
+
+td a:hover {
+	color		: #bbf;
+	text-decoration	: underline;
+}
+
+.title_old_versions {
+	color		: #c96;
+}
+
+.td_download {
+	color		: #9f9;
+}
+
+.mod_loader {
+	color		: #00cccc;
+}
+section.footer {
+	padding: 60px 0 50px;
+	color:#fff;
+}
+.copyright {
+	position: fixed;
+	bottom: 0;
+	left: 25%;
+}
+.copyright p {
+	text-align:center;
+	font-size:16px;
+	font-weight:200;
+}
+.copyright p a{
+	text-decoration:none;
+	color:#fff;
+}
+.copyright p a:hover {
+	color:red;
+}
+</style>
+</html>

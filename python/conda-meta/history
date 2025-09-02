@@ -41,3 +41,22 @@
 +http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/win-64::threadpoolctl-3.5.0-py38h9909e9c_0
 +http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/win-64::zipp-3.20.2-py38haa95532_0
 # update specs: ['pynndescent']
+==> 2025-09-02 17:02:11 <==
+# cmd: E:\Anaconda\install\Scripts\conda-script.py install -p F:/git/print/python pandas -y
+# conda version: 4.9.2
+-http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/win-64::ca-certificates-2025.2.25-haa95532_0
++http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/noarch::python-tzdata-2025.2-pyhd3eb1b0_0
++http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/noarch::six-1.16.0-pyhd3eb1b0_1
++http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/win-64::bottleneck-1.3.7-py38h9128911_0
++http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/win-64::ca-certificates-2025.7.15-haa95532_0
++http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/win-64::numexpr-2.8.4-py38h7b80656_1
++http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/win-64::pandas-2.0.3-py38h4ed8f06_0
++http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/win-64::python-dateutil-2.9.0post0-py38haa95532_2
++http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/win-64::pytz-2024.1-py38haa95532_0
+# update specs: ['pandas']
+==> 2025-09-02 17:04:06 <==
+# cmd: E:\Anaconda\install\Scripts\conda-script.py install -p F:/git/print/python openpyxl -y
+# conda version: 4.9.2
++http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/win-64::et_xmlfile-1.1.0-py38haa95532_0
++http://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/win-64::openpyxl-3.1.5-py38h827c3e9_0
+# update specs: ['openpyxl']
