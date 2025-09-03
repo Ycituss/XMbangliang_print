@@ -77,6 +77,10 @@ send_qyweixin_file_path = ".\\print\\test.pdf"
 def index():
     return render_template('index.html')
 
+@app.route('/list')
+def list():
+    return render_template('list.html')
+
 
 @app.route('/send_qyweixin1')
 def send_qyweixin1():
