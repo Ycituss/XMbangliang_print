@@ -24,7 +24,7 @@ CLEAR_INTERVAL = 30
 blocked_ips = {}
 
 # 版本
-version = "V2.4.0"
+version = "V2.4.1"
 
 print_num = 1
 miandan_Separator = ".\\file\\面单_外箱单.pdf"
@@ -77,13 +77,16 @@ send_qyweixin_file_path = ".\\print\\test.pdf"
 def index():
     return render_template('index.html')
 
+
 @app.route('/send_qyweixin1')
 def send_qyweixin1():
     return render_template('send_qyweixin1.html')
 
+
 @app.route('/send_qyweixin2')
 def send_qyweixin2():
     return render_template('send_qyweixin2.html')
+
 
 @app.route('/zhuizong')
 def zhuizong():
@@ -131,6 +134,7 @@ def get_version():
     global version
     return version
 
+
 @app.route('/upload_send_qyweixin1', methods=['POST'])
 def upload_send_qyweixin1():
     verify()
@@ -147,6 +151,7 @@ def upload_send_qyweixin1():
     send_qyweixin(url, send_qyweixin_file_path)
     return new_filename + ',' + get_file_type(folder_path + new_filename)
 
+
 @app.route('/upload_send_qyweixin2', methods=['POST'])
 def upload_send_qyweixin2():
     verify()
@@ -162,6 +167,7 @@ def upload_send_qyweixin2():
     url = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=9506fb18-3063-4b53-ad76-f09656fee4f4'
     send_qyweixin(url, send_qyweixin_file_path)
     return new_filename + ',' + get_file_type(folder_path + new_filename)
+
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -460,7 +466,8 @@ def print_miandan():
         shutil.copy(temp_print_file_path, temp_print_file_path[:-4] + '_已打印.pdf')
         temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
     print_black(temp_print_file_path)
-    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path), temp_print_pdf.getNumPages())
+    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+              temp_print_pdf.getNumPages())
     return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
 
 
@@ -475,7 +482,8 @@ def print_SHEIN_huanbaobiao():
     if get_file_type(temp_print_file_path) == '条码_带环保标':
         print_470E(temp_print_file_path)
         temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
-        insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path), temp_print_pdf.getNumPages())
+        insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+                  temp_print_pdf.getNumPages())
         return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
     if get_file_type(temp_print_file_path) != '条码':
         return '当前文件不是条码'
@@ -488,7 +496,8 @@ def print_SHEIN_huanbaobiao():
     temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
     temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
     print_470E(temp_print_file_path)
-    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path), temp_print_pdf.getNumPages())
+    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+              temp_print_pdf.getNumPages())
     return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
 
 
@@ -503,7 +512,8 @@ def print_BLGH_huanbaobiao():
     if get_file_type(temp_print_file_path) == '条码_带环保标':
         print_470E(temp_print_file_path)
         temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
-        insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path), temp_print_pdf.getNumPages())
+        insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+                  temp_print_pdf.getNumPages())
         return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
     if get_file_type(temp_print_file_path) != '条码' and get_file_type(temp_print_file_path) != 'TK条码':
         return '当前文件不是条码'
@@ -512,7 +522,8 @@ def print_BLGH_huanbaobiao():
         temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
         print_470E(temp_print_file_path)
         temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
-        insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path), temp_print_pdf.getNumPages())
+        insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+                  temp_print_pdf.getNumPages())
         return '打印中，请稍后|' + str(5 + 0.1 * temp_print_pdf.getNumPages())
     if not os.path.exists(temp_print_file_path[:-4] + '_已打印.pdf'):
         with open(temp_print_file_path[:-4] + '_已打印.pdf', 'w') as f:
@@ -522,7 +533,8 @@ def print_BLGH_huanbaobiao():
     temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
     temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
     print_470E(temp_print_file_path)
-    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path), temp_print_pdf.getNumPages())
+    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+              temp_print_pdf.getNumPages())
     return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
 
 
@@ -537,7 +549,8 @@ def print_BLAH_huanbaobiao():
     if get_file_type(temp_print_file_path) == '条码_带环保标':
         print_470E(temp_print_file_path)
         temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
-        insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path), temp_print_pdf.getNumPages())
+        insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+                  temp_print_pdf.getNumPages())
         return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
     if get_file_type(temp_print_file_path) != '条码' and get_file_type(temp_print_file_path) != 'TK条码':
         return '当前文件不是条码'
@@ -546,7 +559,8 @@ def print_BLAH_huanbaobiao():
         temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
         print_470E(temp_print_file_path)
         temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
-        insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path), temp_print_pdf.getNumPages())
+        insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+                  temp_print_pdf.getNumPages())
         return '打印中，请稍后|' + str(5 + 0.1 * temp_print_pdf.getNumPages())
     if not os.path.exists(temp_print_file_path[:-4] + '_已打印.pdf'):
         with open(temp_print_file_path[:-4] + '_已打印.pdf', 'w') as f:
@@ -556,7 +570,8 @@ def print_BLAH_huanbaobiao():
     temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
     temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
     print_470E(temp_print_file_path)
-    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path), temp_print_pdf.getNumPages())
+    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+              temp_print_pdf.getNumPages())
     return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
 
 
@@ -571,7 +586,8 @@ def print_BL_huanbaobiao():
     if get_file_type(temp_print_file_path) == '条码_带环保标':
         print_470E(temp_print_file_path)
         temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
-        insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path), temp_print_pdf.getNumPages())
+        insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+                  temp_print_pdf.getNumPages())
         return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
     if get_file_type(temp_print_file_path) != '条码' and get_file_type(temp_print_file_path) != 'TK条码':
         return '当前文件不是条码'
@@ -591,7 +607,8 @@ def print_BL_huanbaobiao():
     temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
     temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
     print_470E(temp_print_file_path)
-    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path), temp_print_pdf.getNumPages())
+    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+              temp_print_pdf.getNumPages())
     return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
 
 
@@ -627,7 +644,8 @@ def print_DJ_huanbaobiao():
     temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
     temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
     print_470E(temp_print_file_path)
-    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path), temp_print_pdf.getNumPages())
+    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+              temp_print_pdf.getNumPages())
     return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
 
 
@@ -663,7 +681,8 @@ def print_XG_huanbaobiao():
     temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
     temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
     print_470E(temp_print_file_path)
-    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path), temp_print_pdf.getNumPages())
+    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+              temp_print_pdf.getNumPages())
     return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
 
 
@@ -699,7 +718,8 @@ def print_XD_huanbaobiao():
     temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
     temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
     print_470E(temp_print_file_path)
-    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path), temp_print_pdf.getNumPages())
+    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+              temp_print_pdf.getNumPages())
     return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
 
 
@@ -735,7 +755,8 @@ def print_DZZ_huanbaobiao():
     temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
     temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
     print_470E(temp_print_file_path)
-    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path), temp_print_pdf.getNumPages())
+    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+              temp_print_pdf.getNumPages())
     return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
 
 
@@ -771,7 +792,8 @@ def print_XF_huanbaobiao():
     temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
     temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
     print_470E(temp_print_file_path)
-    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path), temp_print_pdf.getNumPages())
+    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+              temp_print_pdf.getNumPages())
     return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
 
 
@@ -807,7 +829,8 @@ def print_XGuo_huanbaobiao():
     temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
     temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
     print_470E(temp_print_file_path)
-    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path), temp_print_pdf.getNumPages())
+    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+              temp_print_pdf.getNumPages())
     return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
 
 
@@ -843,7 +866,8 @@ def print_DJZZ_huanbaobiao():
     temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
     temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
     print_470E(temp_print_file_path)
-    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path), temp_print_pdf.getNumPages())
+    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+              temp_print_pdf.getNumPages())
     return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
 
 
@@ -872,7 +896,8 @@ def print_MH_huanbaobiao():
     temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
     temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
     print_470E(temp_print_file_path)
-    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path), temp_print_pdf.getNumPages())
+    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+              temp_print_pdf.getNumPages())
     return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
 
 
@@ -901,7 +926,8 @@ def print_PP_huanbaobiao():
     temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
     temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
     print_470E(temp_print_file_path)
-    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path), temp_print_pdf.getNumPages())
+    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+              temp_print_pdf.getNumPages())
     return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
 
 
@@ -930,7 +956,8 @@ def print_YLCX_huanbaobiao():
     temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
     temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
     print_470E(temp_print_file_path)
-    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path), temp_print_pdf.getNumPages())
+    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+              temp_print_pdf.getNumPages())
     return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
 
 
@@ -959,7 +986,8 @@ def print_YZ_huanbaobiao():
     temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
     temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
     print_470E(temp_print_file_path)
-    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path), temp_print_pdf.getNumPages())
+    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+              temp_print_pdf.getNumPages())
     return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
 
 
@@ -988,7 +1016,8 @@ def print_LY_huanbaobiao():
     temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
     temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
     print_470E(temp_print_file_path)
-    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path), temp_print_pdf.getNumPages())
+    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+              temp_print_pdf.getNumPages())
     return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
 
 
@@ -1516,10 +1545,10 @@ def output_file(trace_path, flag=0):
 
 def check_pixel_in_pdf(pdf_path, page_index=0):
     """
-    检查PDF中指定位置的像素是否为空（白色或透明）
-    位置：距离左边0.8cm，距离上边5.8cm
-    PDF尺寸：10cm x 10cm
-    """
+	检查PDF中指定位置的像素是否为空（白色或透明）
+	位置：距离左边0.8cm，距离上边5.8cm
+	PDF尺寸：10cm x 10cm
+	"""
     # 打开PDF文件
     doc = fitz.open(pdf_path)
     page = doc[page_index]
@@ -1881,13 +1910,13 @@ def init_db():
         conn = sqlite3.connect('database.db')
         c = conn.cursor()
         c.execute('''CREATE TABLE database (
-                     id INTEGER PRIMARY KEY AUTOINCREMENT,
-                     uid TEXT NOT NULL,
-                     timestamp DATETIME NOT NULL,
-                     operator TEXT NOT NULL,
-                     filename TEXT NOT NULL,
-                     barcode_type TEXT NOT NULL,
-                     page_count INTEGER NOT NULL)''')
+					 id INTEGER PRIMARY KEY AUTOINCREMENT,
+					 uid TEXT NOT NULL,
+					 timestamp DATETIME NOT NULL,
+					 operator TEXT NOT NULL,
+					 filename TEXT NOT NULL,
+					 barcode_type TEXT NOT NULL,
+					 page_count INTEGER NOT NULL)''')
 
         # 插入示例数据
         operators = ["黎", "纪", "峰", "刘", "郭馨", "随", "万欣", "徐", "汪"]
@@ -1979,40 +2008,41 @@ def query():
 
     return jsonify(database)
 
+
 def excel_to_markdown_table(file_path):
-	# 读取Excel文件的第一个工作表
-	df = pd.read_excel(file_path, sheet_name=0)
+    # 读取Excel文件的第一个工作表
+    df = pd.read_excel(file_path, sheet_name=0)
 
-	# 提取第一列数据并统计每个值的出现次数
-	value_counts = df.iloc[:, 0].value_counts()
+    # 提取第一列数据并统计每个值的出现次数
+    value_counts = df.iloc[:, 0].value_counts()
 
-	# 转换为字典并按计数排序（从高到低）
-	sorted_dict = value_counts.sort_values(ascending=False).to_dict()
+    # 转换为字典并按计数排序（从高到低）
+    sorted_dict = value_counts.sort_values(ascending=False).to_dict()
 
-	# 生成Markdown表格
-	markdown_table = "| 店铺 | 需操作订单数 |\n"
-	markdown_table += "|------|----------|\n"
+    # 生成Markdown表格
+    markdown_table = "| 店铺 | 需操作订单数 |\n"
+    markdown_table += "|------|----------|\n"
 
-	for content, count in sorted_dict.items():
-		# 处理可能包含特殊字符的内容
-		content_str = str(content)
-		markdown_table += f"| {content_str} | {count} |\n"
+    for content, count in sorted_dict.items():
+        # 处理可能包含特殊字符的内容
+        content_str = str(content)
+        markdown_table += f"| {content_str} | {count} |\n"
 
-	return markdown_table
+    return markdown_table
+
 
 def send_qyweixin(url, file_path):
-	markdown_output = excel_to_markdown_table(file_path)
+    markdown_output = excel_to_markdown_table(file_path)
 
+    data = {
+        "msgtype": "markdown_v2",
+        "markdown_v2": {
+            "content": '![Manifest.png](https://s2.loli.net/2025/09/03/2jsfYCmWpFXdZ7g.png)\n'+markdown_output
+        }
+    }
+    header = {'Content-Type': 'application/json'}
 
-	data = {
-			"msgtype": "markdown_v2",
-			"markdown_v2": {
-				"content": markdown_output
-			}
-	   }
-	header = {'Content-Type': 'application/json'}
-
-	response = requests.post(url, json=data, headers=header)
+    response = requests.post(url, json=data, headers=header)
 
 
 if __name__ == '__main__':
