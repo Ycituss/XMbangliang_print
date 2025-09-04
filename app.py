@@ -24,7 +24,7 @@ CLEAR_INTERVAL = 30
 blocked_ips = {}
 
 # 版本
-version = "V2.4.1"
+version = "V2.4.2"
 
 print_num = 1
 miandan_Separator = ".\\file\\面单_外箱单.pdf"
@@ -77,9 +77,9 @@ send_qyweixin_file_path = ".\\print\\test.pdf"
 def index():
     return render_template('index.html')
 
-@app.route('/list')
-def list():
-    return render_template('list.html')
+@app.route('/web_list')
+def web_list():
+    return render_template('web_list.html')
 
 
 @app.route('/send_qyweixin1')
