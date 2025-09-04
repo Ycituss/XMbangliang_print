@@ -24,7 +24,7 @@ CLEAR_INTERVAL = 30
 blocked_ips = {}
 
 # 版本
-version = "V2.4.2"
+version = "V2.4.3"
 
 print_num = 1
 miandan_Separator = ".\\file\\面单_外箱单.pdf"
@@ -187,29 +187,7 @@ def upload():
     ip = request.headers.get('X-Forwarded-For', request.remote_addr)
     if ',' in ip:
         ip = ip.split(',')[0]
-    ip = ip.split('.')[-1]
-    last_ip_digit = ip.split('.')[-1]
-    user_name = 'temp'
-    if last_ip_digit == '13':
-        user_name = '黎'
-    elif last_ip_digit == '14':
-        user_name = '纪'
-    elif last_ip_digit == '22':
-        user_name = '峰'
-    elif last_ip_digit == '61':
-        user_name = '随'
-    elif last_ip_digit == '104':
-        user_name = '周'
-    elif last_ip_digit == '103':
-        user_name = '汪'
-    elif last_ip_digit == '123':
-        user_name = '刘'
-    elif last_ip_digit == '30':
-        user_name = '徐'
-    elif last_ip_digit == '88':
-        user_name = '万欣'
-    elif last_ip_digit == '47':
-        user_name = '郭馨'
+    user_name = get_name_by_ip(ip)
     new_filename = f'{user_name}_{file.filename}'
     formatted_date = datetime.datetime.now().strftime('%y%m%d')
     folder_path = '.\\print\\' + formatted_date + '\\' + user_name + '\\'
