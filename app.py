@@ -24,7 +24,7 @@ CLEAR_INTERVAL = 30
 blocked_ips = {}
 
 # 版本
-version = "V2.4.3"
+version = "V2.4.4"
 
 print_num = 1
 miandan_Separator = ".\\file\\面单_外箱单.pdf"
@@ -1868,6 +1868,8 @@ def get_name_by_ip(client_ip):
         name = '万欣'
     elif client_ip == '192.168.1.47':
         name = '郭馨'
+    elif client_ip == '192.168.1.5':
+        name = '蒋'
     return name
 
 
