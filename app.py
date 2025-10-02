@@ -1,3 +1,7 @@
+import pythoncom
+
+import win32com
+import win32com.client
 from datetime import timedelta
 
 import os
@@ -1418,8 +1422,49 @@ def Autoprint(file_path_, printer_name):
     # 使用win32api调用默认打印机打印文本内容
     win32api.ShellExecute(0, "print", file_path_, None, ".", 0)
 
+    # print_with_wps(os.path.abspath(file_path_), 2)
+
     # 关闭文件
     pdf_file.close()
+
+def print_with_wps(file_path, copies=1):
+    wps = None
+    doc = None
+    try:
+        pythoncom.CoInitialize()
+        wps = win32com.client.Dispatch("KWPS.Application")
+        if wps is None:
+            raise Exception("无法创建WPS应用程序对象")
+
+        print("WPS 应用程序对象创建成功")
+
+        wps.Visible = True  # 显示WPS窗口
+        doc = wps.Documents.Open(file_path)
+        if doc is None:
+            raise Exception(f"无法打开文件: {file_path}")
+
+        print(f"打开文档: {doc.Name}")
+
+        options = {
+            'Copies': copies,
+            'Collate': True,
+            'Background': False,
+            'Append': False,
+            'PrintToFile': False
+        }
+
+        doc.PrintOut(**options)
+        print(f"文件 {file_path} 已成功打印，共 {copies} 份。")
+
+    except Exception as e:
+        print(f"打印过程中出现错误: {e}")
+
+    finally:
+        if doc:
+            doc.Close(SaveChanges=False)
+        if wps:
+            wps.Quit()
+        pythoncom.CoUninitialize()
 
 
 def crop_pdf(input_pdf_path, output_pdf_path, left, top, right, bottom):
