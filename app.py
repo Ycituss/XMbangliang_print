@@ -29,7 +29,7 @@ CLEAR_INTERVAL = 30
 blocked_ips = {}
 
 # 版本
-version = "V2.5.0"
+version = "V2.5.1"
 
 SUMATRA_PATH = ".\\file\\SumatraPDF.exe"
 print_num = 1
@@ -1507,6 +1507,8 @@ def Sumatra_print_pdf(
     if silent:
         cmd.append("-silent")
 
+    cmd += ["-autorotate", "false"]
+
     # 文件路径
     cmd.append(pdf_path)
 
@@ -1763,7 +1765,7 @@ def print_470E(file_path_470E, copies=1):
 
 def print_black(file_path_black, copies=1):
     verify()
-    Autoprint(file_path_black, 'black')
+    # Autoprint(file_path_black, 'black')
     Sumatra_print_pdf(file_path_black, "black", copies)
 
 
@@ -1969,7 +1971,7 @@ def get_name_by_ip(client_ip):
         name = '峰'
     elif client_ip == '192.168.1.36':
         name = '随'
-    elif client_ip == '192.168.1.45':
+    elif client_ip == '192.168.1.2':
         name = '汪'
     elif client_ip == '192.168.1.66':
         name = '存'
