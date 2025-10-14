@@ -1,4 +1,5 @@
 import pythoncom
+import subprocess
 
 import win32com
 import win32com.client
@@ -28,8 +29,9 @@ CLEAR_INTERVAL = 30
 blocked_ips = {}
 
 # 版本
-version = "V2.4.4"
+version = "V2.5.0"
 
+SUMATRA_PATH = ".\\file\\SumatraPDF.exe"
 print_num = 1
 miandan_Separator = ".\\file\\面单_外箱单.pdf"
 miandan_Identification1 = ".\\file\\外箱唛头.pdf"
@@ -80,6 +82,7 @@ send_qyweixin_file_path = ".\\print\\test.pdf"
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/web_list')
 def web_list():
@@ -1427,6 +1430,7 @@ def Autoprint(file_path_, printer_name):
     # 关闭文件
     pdf_file.close()
 
+
 def print_with_wps(file_path, copies=1):
     wps = None
     doc = None
@@ -1465,6 +1469,64 @@ def print_with_wps(file_path, copies=1):
         if wps:
             wps.Quit()
         pythoncom.CoUninitialize()
+
+
+def Sumatra_print_pdf(
+        pdf_path,
+        printer=None,
+        copies=1,
+        duplex=False,
+        color=True,
+        orientation="portrait",  # "portrait" or "landscape"
+        silent=True
+):
+    if not os.path.exists(SUMATRA_PATH):
+        raise FileNotFoundError(f"SumatraPDF not found at {SUMATRA_PATH}")
+    if not os.path.exists(pdf_path):
+        raise FileNotFoundError(f"PDF not found: {pdf_path}")
+
+    cmd = [SUMATRA_PATH]
+
+    # 打印机设置
+    if printer:
+        cmd += ["-print-to", printer]
+    else:
+        cmd += ["-print-to-default"]
+
+    # 打印设置
+    settings = [f"copies={copies}"]
+    if duplex:
+        settings.append("duplex")
+    if not color:
+        settings.append("monochrome")
+    if orientation == "landscape":
+        settings.append("landscape")
+    cmd += ["-print-settings", ",".join(settings)]
+
+    # 其他参数
+    if silent:
+        cmd.append("-silent")
+
+    # 文件路径
+    cmd.append(pdf_path)
+
+    # 执行命令
+    result = subprocess.run(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        creationflags=subprocess.CREATE_NO_WINDOW  # 隐藏窗口（仅Windows）
+    )
+
+    if result.returncode != 0:
+        raise RuntimeError(f"Print failed: {result.stderr.decode('gbk', errors='ignore')}")
+    else:
+        print(f"✅ 打印成功：{pdf_path}（{copies}份）")
+
+
+#
+# def Sumatra_print(file_path, printer, copies):
+#     Sumatra_print_pdf(file_path, printer, copies, True, False, )
 
 
 def crop_pdf(input_pdf_path, output_pdf_path, left, top, right, bottom):
@@ -1561,10 +1623,11 @@ def output_file(trace_path, flag=0):
     global print_num
     if print_num == "": print_num = 1
     if print_num == 0: return 0
-    temp_path = duplicate_pdf_page(trace_path, 1, int(print_num))
+    # temp_path = duplicate_pdf_page(trace_path, 1, int(print_num))
     if flag == 1:
         return print_num
-    print_trace(temp_path)
+    # print_trace(temp_path)
+    print_trace(trace_path, print_num)
     temp_num = print_num
     print_num = 0
     return temp_num
@@ -1686,19 +1749,22 @@ def duplicate_pdf_page(input_file, page_number, copies):
     return temp_path
 
 
-def print_trace(file_path_trace):
+def print_trace(file_path_trace, copies=1):
     verify()
-    Autoprint(file_path_trace, "470E")
+    # Autoprint(file_path_trace, "470E")
+    Sumatra_print_pdf(file_path_trace, "470E", copies)
 
 
-def print_470E(file_path_470E):
+def print_470E(file_path_470E, copies=1):
     verify()
-    Autoprint(file_path_470E, '470E')
+    # Autoprint(file_path_470E, '470E')
+    Sumatra_print_pdf(file_path_470E, "470E", copies)
 
 
-def print_black(file_path_black):
+def print_black(file_path_black, copies=1):
     verify()
     Autoprint(file_path_black, 'black')
+    Sumatra_print_pdf(file_path_black, "black", copies)
 
 
 def clear_expired_clients():
@@ -2066,7 +2132,7 @@ def send_qyweixin(url, file_path):
     data = {
         "msgtype": "markdown_v2",
         "markdown_v2": {
-            "content": '![Manifest.png](https://s2.loli.net/2025/09/03/2jsfYCmWpFXdZ7g.png)\n'+markdown_output
+            "content": '![Manifest.png](https://s2.loli.net/2025/09/03/2jsfYCmWpFXdZ7g.png)\n' + markdown_output
         }
     }
     header = {'Content-Type': 'application/json'}
