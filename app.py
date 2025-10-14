@@ -1753,20 +1753,20 @@ def duplicate_pdf_page(input_file, page_number, copies):
 
 def print_trace(file_path_trace, copies=1):
     verify()
-    # Autoprint(file_path_trace, "470E")
-    Sumatra_print_pdf(file_path_trace, "470E", copies)
+    Autoprint(file_path_trace, "470E")
+    # Sumatra_print_pdf(file_path_trace, "470E", copies)
 
 
 def print_470E(file_path_470E, copies=1):
     verify()
-    # Autoprint(file_path_470E, '470E')
-    Sumatra_print_pdf(file_path_470E, "470E", copies)
+    Autoprint(file_path_470E, '470E')
+    # Sumatra_print_pdf(file_path_470E, "470E", copies)
 
 
 def print_black(file_path_black, copies=1):
     verify()
-    # Autoprint(file_path_black, 'black')
-    Sumatra_print_pdf(file_path_black, "black", copies)
+    Autoprint(file_path_black, 'black')
+    # Sumatra_print_pdf(file_path_black, "black", copies)
 
 
 def clear_expired_clients():
