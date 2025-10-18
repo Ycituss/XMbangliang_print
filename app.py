@@ -46,6 +46,7 @@ DZZ_huanbaobiao = ".\\file\\3DZZ全环保标模版.pdf"
 XF_huanbaobiao = ".\\file\\XF全环保标模版.pdf"
 XGuo_huanbaobiao = ".\\file\\XGuo全环保标模版.pdf"
 DJZZ_huanbaobiao = ".\\file\\DJZZ全环保标模版.pdf"
+Ssr_huanbaobiao = ".\\file\\Ssr全环保标模版.pdf"
 MH_huanbaobiao = ".\\file\\盟豪全环保标模版.pdf"
 PP_huanbaobiao = ".\\file\\磐品全环保标模版.pdf"
 YZ_huanbaobiao = ".\\file\\云准全环保标模版.pdf"
@@ -859,6 +860,42 @@ def print_DJZZ_huanbaobiao():
               temp_print_pdf.getNumPages())
     return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
 
+@app.route('/print_Ssr_huanbaobiao')
+def print_Ssr_huanbaobiao():
+    verify()
+    global temp_print_file_path, Ssr_huanbaobiao
+    if not os.path.exists(temp_print_file_path):
+        return '请选择文件'
+    if temp_print_file_path[-7:-4] == '已打印':
+        return '请勿重复点击'
+    if get_file_type(temp_print_file_path) == '条码_带环保标':
+        print_470E(temp_print_file_path)
+        temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
+        insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+                  temp_print_pdf.getNumPages())
+        return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
+    if get_file_type(temp_print_file_path) != '条码' and get_file_type(temp_print_file_path) != 'TK条码':
+        return '当前文件不是条码'
+    if get_file_type(temp_print_file_path) == 'TK条码':
+        shutil.copy(temp_print_file_path, temp_print_file_path[:-4] + '_已打印.pdf')
+        temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
+        print_470E(temp_print_file_path)
+        temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
+        insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+                  temp_print_pdf.getNumPages())
+        return '打印中，请稍后|' + str(5 + 0.1 * temp_print_pdf.getNumPages())
+    if not os.path.exists(temp_print_file_path[:-4] + '_已打印.pdf'):
+        with open(temp_print_file_path[:-4] + '_已打印.pdf', 'w') as f:
+            pass
+    merge_pdfs_vertically(Ssr_huanbaobiao, temp_print_file_path, temp_print_file_path[:-4] + '_已打印.pdf')
+
+    temp_print_file_path = temp_print_file_path[:-4] + '_已打印.pdf'
+    temp_print_pdf = PyPDF2.PdfFileReader(temp_print_file_path)
+    print_470E(temp_print_file_path)
+    insert_db(request.remote_addr, temp_print_file_path, get_file_type(temp_print_file_path),
+              temp_print_pdf.getNumPages())
+    return '打印中，请稍后|' + str(50 + 2 * temp_print_pdf.getNumPages())
+
 
 @app.route('/print_MH_huanbaobiao')
 def print_MH_huanbaobiao():
@@ -1275,6 +1312,30 @@ def craft_DJZZ_huanbaobiao():
     temp_print_file_path = temp_print_file_path[:-4] + '_带环保标.pdf'
     return send_file(temp_print_file_path, as_attachment=False)
 
+
+@app.route('/craft_Ssr_huanbaobiao')
+def craft_Ssr_huanbaobiao():
+    verify()
+    global temp_print_file_path, Ssr_huanbaobiao
+    if not os.path.exists(temp_print_file_path):
+        return '请选择文件'
+    if temp_print_file_path[-10:-4] == '带环保标':
+        return '请勿重复点击'
+    if get_file_type(temp_print_file_path) == '条码_带环保标':
+        return send_file(temp_print_file_path, as_attachment=False)
+    if get_file_type(temp_print_file_path) != '条码' and get_file_type(temp_print_file_path) != 'TK条码':
+        return '当前文件不是条码'
+    if get_file_type(temp_print_file_path) == 'TK条码':
+        shutil.copy(temp_print_file_path, temp_print_file_path[:-4] + '_带环保标.pdf')
+        temp_print_file_path = temp_print_file_path[:-4] + '_带环保标.pdf'
+        return send_file(temp_print_file_path, as_attachment=False)
+    if not os.path.exists(temp_print_file_path[:-4] + '_带环保标.pdf'):
+        with open(temp_print_file_path[:-4] + '_带环保标.pdf', 'w') as f:
+            pass
+    merge_pdfs_vertically(Ssr_huanbaobiao, temp_print_file_path, temp_print_file_path[:-4] + '_带环保标.pdf')
+
+    temp_print_file_path = temp_print_file_path[:-4] + '_带环保标.pdf'
+    return send_file(temp_print_file_path, as_attachment=False)
 
 @app.route('/craft_MH_huanbaobiao')
 def craft_MH_huanbaobiao():
