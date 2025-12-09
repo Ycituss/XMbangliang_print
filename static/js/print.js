@@ -417,6 +417,20 @@ function print_Ssr_huanbaobiao() {
     updateClientCount();
 }
 
+function print_Hd_huanbaobiao() {
+    document.getElementById('fileTypeMT').innerText = '正在合成，请勿重复点击'
+    fetch('/print_Hd_huanbaobiao')
+   .then(response => response.text())
+   .then(data => {
+        document.getElementById('fileTypeMT').innerText = data.split('|')[0]
+        if(data.split('|').length > 1) {
+            setTimeout(printComplete, parseInt(data.split('|')[1])*100)
+        }
+        console.log(data);
+    });
+    updateClientCount();
+}
+
 function print_XG_huanbaobiao() {
     document.getElementById('fileTypeMT').innerText = '正在合成，请勿重复点击'
     fetch('/print_XG_huanbaobiao')
@@ -571,6 +585,15 @@ function craft_Ssr_huanbaobiao() {
     document.getElementById('fileTypeMT').innerText = '合成完成';
     const link = document.createElement('a');
     link.href = '/craft_Ssr_huanbaobiao';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function craft_Hd_huanbaobiao() {
+    document.getElementById('fileTypeMT').innerText = '合成完成';
+    const link = document.createElement('a');
+    link.href = '/craft_Hd_huanbaobiao';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
