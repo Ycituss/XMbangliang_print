@@ -9,6 +9,7 @@
       <sourceFolder url="file://$MODULE_DIR$/python/Lib/site-packages/pythonwin" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/python/Lib/site-packages/win32" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/python/Lib/site-packages/win32/lib" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/python" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.8" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

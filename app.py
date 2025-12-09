@@ -1924,9 +1924,9 @@ def get_ip_list():
 
 
 def verify():
-    return True
+    # return True
     global online_clients, blocked_ips
-    if get_value_from_webpage() != "ycitus":
+    if get_value_from_webpage() != "ycitussssss":
         client_ip = request.remote_addr
         blocked_ips[client_ip] = 1
         return False
@@ -1941,7 +1941,7 @@ def get_value_from_webpage():
             soup = BeautifulSoup(response.text, 'html.parser')
             elements = soup.find_all(class_="print")
             for element in elements:
-                # print(element.get_text())
+                print(element.get_text())
                 return element.get_text()
         else:
             print(f"请求失败，状态码: {response.status_code}")
