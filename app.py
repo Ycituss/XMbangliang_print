@@ -2272,4 +2272,4 @@ if __name__ == '__main__':
     scheduler.add_job(clear_expired_clients, 'interval', seconds=CLEAR_INTERVAL)
     scheduler.start()
     init_db()
-    app.run(host='0.0.0.0', port=80)
+    app.run(host='0.0.0.0', port=602)
