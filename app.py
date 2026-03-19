@@ -1,3 +1,7 @@
+import json
+import secrets
+import sys
+
 import pythoncom
 import subprocess
 
@@ -14,7 +18,7 @@ import PyPDF2
 import win32api
 import shutil
 import fitz  # PyMuPDF
-from flask import Flask, render_template, jsonify, request, abort, send_file
+from flask import Flask, render_template, jsonify, request, abort, send_file, Response, flash, redirect, url_for
 from apscheduler.schedulers.background import BackgroundScheduler
 import sqlite3
 import pandas as pd
@@ -80,6 +84,8 @@ temp_output_path = ".\\file\\output.pdf"
 temp_print_file_path = ".\\print\\test.pdf"
 send_qyweixin_file_path = ".\\print\\test.pdf"
 
+app.secret_key = secrets.token_hex(16)
+
 
 @app.route('/')
 def index():
@@ -135,6 +141,10 @@ def redirect_to_dayin():
 def redirect_to_shujuchaxun():
     return render_template('shujuchaxun.html')
 
+@app.route('/upload_excel')
+def redirect_to_upload_excel():
+    return render_template('upload_excel.html')
+
 
 @app.route('/call_print_test')
 def call_print_test():
@@ -146,6 +156,93 @@ def call_print_test():
 def get_version():
     global version
     return version
+
+
+@app.route('/api/pdddata')
+def pdd_data():
+    try:
+        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'file', 'pdd', 'output', 'pdddata.json'), 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+        # 手动构建响应，确保 UTF-8 编码
+        response = Response(
+            json.dumps(data, ensure_ascii=False),
+            content_type='application/json; charset=utf-8'
+        )
+        return response
+
+    except FileNotFoundError:
+        return Response(
+            json.dumps({"error": "数据文件未找到"}, ensure_ascii=False),
+            content_type='application/json; charset=utf-8',
+            status=404
+        )
+    except json.JSONDecodeError:
+        return Response(
+            json.dumps({"error": "JSON 文件格式错误"}, ensure_ascii=False),
+            content_type='application/json; charset=utf-8',
+            status=500
+        )
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in {'xlsx', 'xls'}
+
+
+@app.route('/upload_excel', methods=['POST'])
+def upload_excel():
+    """处理文件上传并执行转换"""
+
+    # 检查是否有文件
+    if 'file' not in request.files:
+        flash('没有选择文件', 'error')
+        return redirect(request.url)
+
+    file = request.files['file']
+
+    # 检查文件名是否为空
+    if file.filename == '':
+        flash('没有选择文件', 'error')
+        return redirect(request.url)
+
+    # 检查文件类型
+    if file and allowed_file(file.filename):
+        # 安全的文件名
+        from werkzeug.utils import secure_filename
+        filename = secure_filename(file.filename)
+
+        # 保存上传的文件
+        filepath = os.path.join('file', 'pdd', 'upload', filename)
+        file.save(filepath)
+
+        # 执行转换脚本
+        output_filename = 'pdddata.json'
+        output_path = os.path.join('file', 'pdd', 'output', output_filename)
+
+        try:
+            # 调用转换脚本
+            result = subprocess.run(
+                [sys.executable, 'excel_to_json.py', filepath, output_path],
+                capture_output=True,
+                text=True,
+                encoding='utf-8',  # 明确指定编码
+                cwd=os.getcwd()
+            )
+
+            if result.returncode == 0:
+                flash(f'✅ 转换成功！共处理 {result.stdout.count("->")} 条数据', 'success')
+                flash(f'📁 输出文件：{output_path}', 'info')
+            else:
+                flash(f'❌ 转换失败：{result.stderr}', 'error')
+
+        except Exception as e:
+            flash(f'❌ 执行出错：{str(e)}', 'error')
+
+        return redirect(url_for('upload_excel'))
+
+    else:
+        flash('只允许上传 .xlsx 或 .xls 文件', 'error')
+        return redirect(request.url)
 
 
 @app.route('/upload_send_qyweixin1', methods=['POST'])
