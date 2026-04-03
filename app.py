@@ -1,4 +1,5 @@
 import json
+import re
 import secrets
 import sys
 
@@ -229,9 +230,12 @@ def upload_excel():
                 cwd=os.getcwd()
             )
 
+            stdout_output = result.stdout or ""
+
             if result.returncode == 0:
-                flash(f'✅ 转换成功！共处理 {result.stdout.count("->")} 条数据', 'success')
-                flash(f'📁 输出文件：{output_path}', 'info')
+                flash(f'✅ 转换成功！', 'success')
+                # flash(f'✅ 转换成功！共处理 {stdout_output.count("->")} 条数据', 'success')
+                # flash(f'📁 输出文件：{output_path}', 'info')
             else:
                 flash(f'❌ 转换失败：{result.stderr}', 'error')
 
@@ -243,6 +247,85 @@ def upload_excel():
     else:
         flash('只允许上传 .xlsx 或 .xls 文件', 'error')
         return redirect(request.url)
+
+@app.route('/api/upload_excel', methods=['POST'])
+def upload_excel_api():
+    """API 接口：上传 Excel 文件并转换为 JSON"""
+
+    # 检查是否有文件
+    if 'file' not in request.files:
+        return jsonify({
+            'success': False,
+            'message': '没有选择文件'
+        }), 400
+
+    file = request.files['file']
+
+    if file.filename == '':
+        return jsonify({
+            'success': False,
+            'message': '没有选择文件'
+        }), 400
+
+    if not allowed_file(file.filename):
+        return jsonify({
+            'success': False,
+            'message': '只允许上传 .xlsx 或 .xls 文件'
+        }), 400
+
+    # 安全文件名
+    from werkzeug.utils import secure_filename
+    filename = secure_filename(file.filename)
+    upload_dir = os.path.join('file', 'pdd', 'upload')
+    output_dir = os.path.join('file', 'pdd', 'output')
+
+    # 确保目录存在
+    os.makedirs(upload_dir, exist_ok=True)
+    os.makedirs(output_dir, exist_ok=True)
+
+    filepath = os.path.join(upload_dir, filename)
+    file.save(filepath)
+
+    output_filename = 'pdddata.json'
+    output_path = os.path.join(output_dir, output_filename)
+
+    try:
+        # 调用转换脚本
+        result = subprocess.run(
+            [sys.executable, 'excel_to_json.py', filepath, output_path],
+            capture_output=True,
+            text=True,
+            encoding='utf-8',
+            cwd=os.getcwd()
+        )
+
+        if result.returncode == 0:
+            # 可选：读取生成的 JSON 文件内容并返回
+            if os.path.exists(output_path):
+                with open(output_path, 'r', encoding='utf-8') as f:
+                    json_data = f.read()  # 或者 json.load(f) 转为 dict
+            else:
+                json_data = None
+
+            return jsonify({
+                'success': True,
+                'message': f'转换成功！',
+                'output_file': output_path,
+                'data': json_data  # 可选：直接返回 JSON 内容
+            }), 200
+        else:
+            return jsonify({
+                'success': False,
+                'message': '转换失败',
+                'error': result.stderr
+            }), 500
+
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'message': '执行出错',
+            'error': str(e)
+        }), 500
 
 
 @app.route('/upload_send_qyweixin1', methods=['POST'])
